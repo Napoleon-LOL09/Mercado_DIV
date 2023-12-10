@@ -1,0 +1,42 @@
+#divImg {
+    display:flex; 
+    height: 490px;
+    background-image: url('../../imagenes/recetas_ae/recetas.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#divEP{
+    width: 60%;
+    font-family: cursive;
+    width: max-content;
+    display: flex;
+}
+
+#divEP label{
+    color: black;
+}
+
+
+#id_categoria, #id_nombre{ 
+    width: 390px;
+    padding: 6px;
+}
+
+#id_ingre, #id_proce{
+    width: 390px;
+    height: 200px;
+}
+
+#id_categoria, #id_proce{
+    margin-left: 10px;
+}
+
+#img-clear_id, label[for="img-clear_id"], label[for="video-clear_id"], #video-clear_id {
+    display: none;
+}
+
+#losbtn button{
+    width: 150px;
+}

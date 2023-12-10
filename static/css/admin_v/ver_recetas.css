@@ -1,0 +1,97 @@
+#tblImg{
+    position: relative;
+}
+
+#divIE{
+    width: 100%; 
+    display: flex;
+    align-items: center;
+}
+
+.lineas{
+    border-bottom: 1px solid rgba(10, 116, 12, 0.308); 
+    flex-grow: 1;
+    border-radius: 50px;
+}
+
+#linea1{
+    border-bottom-left-radius: 30px;
+}
+
+#linea2{
+    border-bottom-right-radius: 30px;
+}
+
+#ctnImg{
+    display:flex; 
+    height: 400px;
+    background-image: url('../../imagenes/recetas_ae/recetas.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#ingre label{
+    font-size: 18px;
+    color: black;
+}
+#procedi label {
+    font-size: 18px;
+}
+
+#imgRe{
+    width: 620px;
+    height: 500px;
+    border-radius: 30px;
+}
+
+#porIMG{
+    position: absolute; 
+    left: 50%; 
+    top: 10%;
+}
+
+#ctnRe{
+    text-align: center; 
+    position: relative; 
+    display: inline-block;
+    left: 3.5%;
+    overflow: hidden;
+}
+
+#ctnRee{
+    text-align: center; 
+    position: relative; 
+    display: inline-block;
+    left: 2.9%;
+    overflow: hidden;
+}
+
+.img1, .img2{
+    border-radius: 20px;
+}
+
+.names1{
+    position: absolute; 
+    color: rgb(255, 255, 255); 
+    font-size: 30px; font-weight: bold; 
+    top: 320px; 
+    margin-left: -47%; 
+    background-color: green; 
+    height: 50px; 
+    width: max-content;
+    border-radius: 15px;
+}
+
+.names2{
+    position: absolute; 
+    color: rgb(255, 255, 255); 
+    font-size: 25px; 
+    font-weight: bold; 
+    top: 220px;
+    margin-left: -31%; 
+    background-color: green; 
+    height: 40px; 
+    width: max-content;
+    border-radius: 15px;
+}

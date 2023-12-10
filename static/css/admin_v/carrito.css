@@ -1,0 +1,63 @@
+#ctnImg {
+    display:flex; 
+    height: 390px;
+    background-image: url('../../imagenes/carrito_ae/fondo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    position: relative;
+    z-index: 1;
+}
+
+#tblCC{
+    width: 100%;
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    font-family: cursive;
+    color: rgb(0, 0, 0) ;
+    display: flexbox;
+}
+.compra{
+
+    width: 25%;
+    font-family: cursive;
+    font-size: 18px;
+    top: 80%;
+    margin-left: 90px;
+    margin-top: 30px;
+}
+
+#fnlz{
+    background-color: #fafafa;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    font-family: cursive;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    
+}
+
+#divTot {
+    font-family: cursive;
+    font-size: 20px;
+}
+
+#lblTap{
+    font-weight: bold;
+}
+
+#lblSut{
+    margin-left: 150px;
+    font-weight:100;
+}
+
+#ctnTAPC{
+    background-color: white;
+    border: #86A789 solid;
+    border-radius: 30px;
+    width: 400px;
+    height: 500px;
+}

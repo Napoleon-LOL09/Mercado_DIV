@@ -1,0 +1,56 @@
+#ImgFon{
+    display:flex; 
+    height: 370px;
+    background-image: url('../../imagenes/cupon_a/fondo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#ctnCP{
+    border: 1px solid rgba(10, 116, 12, 0.308);
+    width: 38%;
+    font-family: cursive;
+    border-radius: 20px;
+}
+
+#ctnCP label{
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#divBtn button{
+    width: 40%;
+    padding: 7px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#divTb{
+    width: 54%;
+    margin-left: 40px;
+    text-align: center;
+}
+
+/* Imagen entre contenedor */
+#divIE{
+    width: 100%; 
+    display: flex;
+    align-items: center;
+}
+
+.lineas{
+    border-bottom: 1px solid rgba(10, 116, 12, 0.308); 
+    flex-grow: 1;
+    border-radius: 50px;
+}
+
+#linea1{
+    border-bottom-left-radius: 30px;
+
+}
+
+#linea2{
+    border-bottom-right-radius: 30px;
+}

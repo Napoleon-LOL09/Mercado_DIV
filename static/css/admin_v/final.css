@@ -1,0 +1,71 @@
+#map{
+    width: 70%;
+    height: 500px;
+}
+
+#show_hide{
+    background: none; 
+    background-color: inherit;
+    border: none;
+}
+
+#ctnMSG{
+    margin-left: 20px;
+    width: max-content;
+    height: 600px;
+}
+
+#msg_enca{
+    text-align: center; 
+    border-bottom: 1px solid rgba(10, 116, 12, 0.308);
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 20px;
+    width: 353px;
+    margin-left: -12px;
+}
+
+.caja_chat {
+    width: 350px;
+    margin: 50px auto;
+    border: 1px solid rgba(10, 116, 12, 0.308);
+    padding: 10px;
+    border-radius: 30px;
+    margin-top: 28px;
+  }
+  
+  .caja_msg {
+    height: 380px;
+    overflow-y: scroll;
+    border-bottom: 1px solid rgba(10, 116, 12, 0.308);
+    padding-bottom: 10px;
+  }
+
+  .resp_msg{
+    text-align: right;
+    margin-left: auto;
+  }
+  
+
+  .input_chat {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input_chat input[type="text"] {
+    flex: 1;
+    margin-right: 10px;
+    border-radius: 30px;
+    border: rgba(10, 116, 12, 0.308);
+  }
+  
+  .input_chat button {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 19px;
+    font-weight: bold;
+    width: 180px;
+    background-color: rgba(14, 97, 7, 0.8);
+    color:white;
+    cursor: pointer;
+  }

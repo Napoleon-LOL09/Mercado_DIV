@@ -1,0 +1,104 @@
+#ImgFon{
+    display:flex; 
+    height: 390px;
+    background-image: url('../../imagenes/productos_ae/fondo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#contPad{
+    display: flex; 
+}
+
+#fist_cat{
+    border: 1px solid rgba(10, 116, 12, 0.308); 
+    font-family: cursive; 
+    display: flex; 
+    flex-direction: column;
+    width: 45%;
+    border-radius: 30px;
+}
+
+#ctn_cat label{
+    color: black;
+}
+
+#ctn_cat{
+    margin-left: 40px;
+}
+
+#ctn_cat input, select{
+    width: 89%;
+    padding: 7px;
+    border-radius: 20px;
+}
+
+#ctn_cat textarea{
+    width: 89%;
+    border-radius: 20px;
+}
+
+#btnR{
+    background-color: rgba(14, 97, 7, 0.8);
+    width: 35%;
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+}
+
+#divtableP{
+    width: 44%;
+}
+
+/*Usuario*/
+#ctn_fil{
+    border: #265073 solid;
+    border-top: none;
+    width: 46%;
+    text-align: left;
+    border-radius: 30px;
+    z-index: 1;
+    background-color: white;
+}
+
+/*Admin*/
+#ctn_fil_a{
+    border: #265073 solid;
+    border-top: none;
+    width: 46%;
+    text-align: left;
+    border-radius: 30px;
+    z-index: 1;
+    background-color: white;
+}
+
+#result_fil{
+    margin-left: 10px;
+}
+
+
+
+/* Decoracion de la imagen producto*/
+#divIE{
+    width: 100%; 
+    display: flex;
+    align-items: center;
+}
+
+.lineas{
+    border-bottom: 1px solid rgba(10, 116, 12, 0.308); 
+    flex-grow: 1;
+    border-radius: 50px;
+}
+
+#linea1{
+    border-bottom-left-radius: 30px;
+
+}
+
+#linea2{
+    border-bottom-right-radius: 30px;
+}

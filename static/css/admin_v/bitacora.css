@@ -1,0 +1,84 @@
+#ImgFon {
+    display:flex; 
+    height: 390px;
+    background-image: url('../../imagenes/bitacora_ae/fondo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#ctnT{
+    font-family: cursive;
+}
+
+#titulo{
+    color: rgb(5, 5, 113);  
+    text-align: center;
+}
+
+#titulo h4{
+    font-weight: bold;     
+    font-size: 30px; 
+
+}
+
+#ctnTC {
+    font-size: 20px;
+}
+
+#ctnTC textarea {
+    height: 150px;
+}
+
+#ctnTC input, textarea {
+    width: 600px;
+}
+
+#ctnTC input {
+    padding: 7px;
+}
+
+#ctnTabla{
+    position: relative;
+    font-size: 19px;
+    left: 2%;
+}
+
+#btnA{
+    background-color: rgba(14, 97, 7, 0.8);
+    border-radius: 30px;
+    font-size: 20px;
+    width: 180px;
+    padding: 12px;
+    color: white;
+}
+
+#btnComent {
+    background-color: rgba(14, 97, 7, 0.8);
+    color: white;
+    font-weight: bold;
+    width: 110px;
+    border-radius: 30px;
+    padding: 7px;
+
+}
+
+#divIE{
+    width: 100%; 
+    display: flex;
+    align-items: center;
+}
+
+.lineas{
+    border-bottom: 1px solid rgba(10, 116, 12, 0.308); 
+    flex-grow: 1;
+    border-radius: 50px;
+}
+
+#linea1{
+    border-bottom-left-radius: 30px;
+}
+
+#linea2{
+    border-bottom-right-radius: 30px;
+}

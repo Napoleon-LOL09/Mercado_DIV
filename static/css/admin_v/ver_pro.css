@@ -1,0 +1,52 @@
+#ImgFon{
+    display:flex; 
+    height: 390px;
+    background-image: url('../../imagenes/productos_ae/fondo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#datos label{
+    margin-bottom: 10px;
+}
+
+.Wid{
+    font-size: 20px;
+}
+
+.rel{
+    font-size: 18px;
+}
+
+#ctnPa{
+    display: flex; 
+    font-family: cursive;
+}
+
+#ctnPd{
+    display: flex; 
+    flex-direction: column;
+    width: 40%;
+    margin-left: 100px;
+}
+
+#ctnPd2{
+    width: 90%;
+    border: 1px solid rgba(10, 116, 12, 0.308);
+}
+
+#carro{
+    background-color: rgba(14, 97, 7, 0.8);
+    color: white;
+    width: 45%;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+#publicar_c{
+    width: 12%; 
+    padding: 10px; 
+    color: white; 
+    background-color: rgba(14, 97, 7, 0.8);
+}

@@ -1,0 +1,30 @@
+#ImgFon{
+    display:flex; 
+    height: 390px;
+    background-image: url('../../imagenes/usuarios_a/fondo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.table-bordered {
+    border-collapse: separate;
+    border-spacing: 0px;
+
+}
+
+#tabla{
+    width: 70%;
+    align-items: center;
+    font-family: cursive;
+    background-color: hsl(0, 0%, 100%);
+    color: black;
+    font-size: 15px;
+}
+
+#btnE{
+    background-color: hsl(35, 94%, 33%);
+    color: white;
+}
+
+

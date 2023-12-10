@@ -1,0 +1,25 @@
+#tableP {
+    width: 1100px;
+    font-family: cursive;
+    background-color: #000000ce;
+    color: white;
+    font-size: 19px;
+    border-radius: 30px;
+    opacity: 0.9;
+}
+
+#tableP thead{
+    font-weight: bold;
+}
+
+
+#ctnOP{
+    background-color: #000000ce;
+    width: 1000px;
+    border-radius: 30px;
+    color: white;
+    font-size: 17px;
+    font-family: cursive;
+    margin-left: 17%;
+    opacity: 0.9;
+}

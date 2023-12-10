@@ -1,0 +1,47 @@
+#ctnE{
+    background-color: hsl(0, 0%, 0%);
+    float: left;
+    opacity: 0.9;
+    border-radius: 30px;
+    color: white;
+    width: 31%;
+    margin-left: 36%;
+    margin-top: 17%;
+    font-family:cursive;
+    font-size: 17px;
+}
+
+#email{
+    height: 38px;
+    width: 70%; 
+    border-radius: 50px;
+}
+
+#btnE {
+    background-color: hsl(325, 84%, 10%);
+    border-radius: 20px;
+    color: white;
+    margin-left: -5%;
+    font-size: 20px;
+    width: 39%;
+}
+
+
+#btnV {
+    background-color: hsl(325, 84%, 10%);
+    border-radius: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    margin-top: -23px;
+    margin-left: -0px;
+    width: 39%;
+}
+
+#ctnI{
+    margin-left: 34%;
+    margin-top: -12%;
+}
+
+#error{
+    margin-left: -19px;
+}

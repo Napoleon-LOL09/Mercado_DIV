@@ -1,0 +1,153 @@
+#imgFi {
+    display:flex; 
+    height: 390px;
+    background-image: url('../../imagenes/tracking_ae/fondo.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#slct_exist, #slct_opc{
+    width: 88%;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    padding: 8px;
+    border-radius: 30px;
+}
+
+#map{
+    width: 500px;
+    height: 400px;
+}
+
+#ctnPS{
+    display: flex;
+}
+
+#ctnHijo{
+    border: 1px solid rgba(10, 116, 12, 0.308);
+    margin-left: 90px;
+}
+
+#ctnHijo input{
+    width: 90%;
+    border-radius: 20px;
+    padding: 8px;
+} 
+#ctnHijo label{
+    font-size: 17.5px;
+}
+#ctnHijo h4{
+    font-weight:bold;
+    color: rgb(5, 5, 113);
+}
+
+.label_inputs{
+    margin-left: 20px;
+
+}
+.label_inputs label{
+    margin-top: 6px;
+    color: black;
+}
+
+#btn_c{
+    background-color: rgba(14, 97, 7, 0.8);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 35%;
+    padding: 7px;
+}
+
+#btn_ce{
+    background-color: rgba(14, 97, 7, 0.8);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 35%;
+    padding: 7px;
+}
+
+
+/* Tarjetas */
+#tarjetaa{
+    margin-bottom: 20px;
+    position: relative;
+}
+.cdt{
+    width: 420px;
+}
+
+#tarjetaa #lnt {
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: white;
+    padding: 0 5px; 
+    color: #888;
+    font-size: 15px;
+    height: 17px;
+}
+  
+#tarjetaa #nt {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 89%; 
+}
+
+#tarjetaa #lma {
+    position: absolute;
+    top: 54px; 
+    left: 10px; 
+    background-color: white;
+    padding: 0 5px; 
+    color: #888;
+    font-size: 15px;
+    height: 17px;
+}
+  
+#tarjetaa #ma {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 44%; 
+}
+
+#tarjetaa #lcds {
+    position: absolute;
+    top: 53px; 
+    left: 198px; 
+    background-color: white;
+    padding: 0 5px; 
+    color: #888;
+    font-size: 14px;
+}
+  
+#tarjetaa #cds {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 44%; 
+}
+
+#tarjetaa #lname {
+    position: absolute;
+    top: 120px; 
+    left: 10px; 
+    background-color: white;
+    padding: 0 5px; 
+    color: #888;
+    font-size: 15px;
+}
+  
+#tarjetaa #name {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 89%;
+}
+

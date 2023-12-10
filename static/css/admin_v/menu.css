@@ -1,0 +1,213 @@
+body{
+    background-color: hsla(0, 0%, 100%, 0.746);
+}
+
+/* Menu */
+#ctnPB{
+    display: flex; 
+    position: relative; 
+    flex-direction: column; 
+    align-items: center;
+}
+
+#ctnSB{
+    display: flex;
+    width: max-content; 
+    margin: 0;
+}
+
+#ctnIP{
+    margin-top: 20px;
+    display: flex; 
+    flex-direction: column; 
+}
+
+#Productos{
+    display: flex; 
+    position: absolute; 
+    margin-top: 40px; 
+    background-color: #fff;
+    width: 400px;
+    border-top: none;
+    border-bottom: black solid 1px;
+    border-right: black solid 1px;
+    border-left: black solid 1px;
+}
+
+/* Productos */
+#CtnPapa{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+}
+
+#ctnAP{
+    text-align: right; 
+    font-family: cursive; 
+    font-weight: bold; 
+    font-size: 22px; 
+    height: max-content;
+}
+
+#slider {
+    display: flex;
+}
+
+.btnMove{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20px;
+    color: grey;
+}
+
+.btnMove:focus{
+    outline: none;
+}
+
+#slider_h{
+    flex-shrink: 0; 
+    width: 200px; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+#slider_h label{
+    margin: 0;
+    text-align: left;
+    font-family: cursive;
+}
+
+#btn1{
+    background-color: rgba(14, 97, 7, 0.8);
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;    
+    width: 190px;    
+    height: 50px;
+    font-size: 17px;
+}
+
+/* Reetas */
+
+#ctnAR{
+    text-align: right; 
+    font-family: cursive; 
+    font-weight: bold; 
+    font-size: 22px; 
+    height: max-content;
+}
+
+#SlideRR{
+    display: flex;
+    width: 1330px;    
+    align-items: center;
+    text-align: center;
+    
+}
+
+.btnMoveR{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20px;
+    color: grey;
+}
+
+.btnMoveR:focus{
+    outline: none;
+}
+
+#slider_R{
+    flex-shrink: 0; 
+    width: 310px; 
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#slider_R label{
+    margin: 0;
+    text-align: left;
+    font-family: cursive;
+}
+
+#btn1_1{
+    background-color: rgba(14, 97, 7, 0.8);
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;    
+    width: 190px;    
+    height: 50px;
+    font-size: 17px;
+}
+
+/* Decoracion de la imagen producto*/
+#divIE{
+    width: 100%; 
+    display: flex;
+    align-items: center;
+}
+
+.lineas{
+    border-bottom: 1px solid rgba(10, 116, 12, 0.308); 
+    flex-grow: 1;
+    border-radius: 50px;
+}
+
+#linea1{
+    border-bottom-left-radius: 30px;
+
+}
+
+#linea2{
+    border-bottom-right-radius: 30px;
+}
+
+
+/*Header Final*/
+#hder{
+    background-color: #11324e;
+}
+
+#ctn2{
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+}
+
+#ctn1_1{
+    display: inline-block;
+    vertical-align: top;
+    background-color: inherit ;
+}
+
+#ctn1{
+    margin-left:auto;
+    margin-right: auto;
+    width: 250px;
+    display: flex;
+
+}
+#ctn3{
+    display: inline-block;
+    width: 36%;
+    vertical-align: right;
+}
+
+#ctnI {
+    margin: auto
+}
+#img2{
+    margin-left: 300px
+}
+
+#img1{
+    margin-top: -185px;
+    margin-left: 170px
+}

@@ -1,0 +1,78 @@
+#ImgFon{
+    display:flex; 
+    height: 390px;
+    background-image: url('../../imagenes/productos_ae/fondo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#divEPD{
+    width: 650px;
+    border-radius: 30px;
+    border: 5px solid rgba(10, 116, 12, 0.308);
+    margin-right: 50px;
+}
+#divEPD label{
+    color: black;
+}
+
+#divEP{
+    width: 60%;
+    font-family: cursive;
+    width: max-content;
+    display: flex;
+}
+
+#divEP label{
+    color: black;
+}
+
+#id_name, #id_precio{ 
+    width: 272px;
+    padding: 6px;
+}
+#id_categoria{
+    width: 550px;
+    padding: 8px;
+}
+#id_descripcion{
+    width: 550px;
+    height: 100px;
+}
+
+#img-clear_id, label[for="img-clear_id"]{
+    display: none;
+}
+
+#losbtn button{
+    width: 270px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+#btngg{
+    background-color: rgba(14, 97, 7, 0.8);
+    color: white;
+}
+/*lineas*/
+#divIE{
+    width: 100%; 
+    display: flex;
+    align-items: center;
+}
+
+.lineas{
+    border-bottom: 2px solid rgba(10, 116, 12, 0.308); 
+    flex-grow: 1;
+    border-radius: 50px;
+}
+
+#linea1{
+    border-bottom-left-radius: 30px;
+
+}
+
+#linea2{
+    border-bottom-right-radius: 30px;
+}
