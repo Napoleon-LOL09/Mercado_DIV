@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/traking.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <title> Datos de envio - {{request.user.username}} </title>
+</head>
+<body>
+    <header id="header">
+        <div id="hdPri"> 
+            <div id="btncont" class="mt-2 mr-2">
+                <button id="user_log" class="mr-5">
+                    <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                    <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+                </button>
+  
+                <button id="secciones" class="mr-5"> 
+                   <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+  
+                <button id="btncar" class="mr-3">
+                    <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+                </button>
+  
+                <button id="btnLog" class="mr-2">
+                    <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+                </button>
+            </div>
+        </div> 
+  
+        <div id="white">
+            <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+            <button id="home"> 
+                <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+            </button>
+        </div>
+  
+        <div id="carrito_h">
+          <div id="ttl_carro" > 
+            <h4> Productos en el carro </h4>
+          </div>
+          {% if pro_carrito %}
+          <div id="scrollT">
+            <table class="ml-4 mt-2 mb-3">
+                <tbody>
+                    {% for pro in pro_carrito %}
+                        <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                            <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                            <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                            <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                                {{ pro.producto.precio }}
+                            </td>
+                            <td style="width: 80px;"> 
+                                <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                                <span class="cantidad"> {{ pro.cantidad }} </span>
+                                <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>
+                            </td>
+                            <td>
+                            <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            </td>
+                        </tr>
+                    {% endfor %}   
+                </tbody>
+            </table>
+            </div>
+            <div id="diseño_bajo"> 
+              <label id="subtotall" class="ml-4"> </label> <br>
+              <div style="text-align: center; " class="mt-2">
+                <a href="{% url 'Admin_v/carrito' %}">
+                  <button class="btn"> Finalizar Compra </button>
+                </a>
+              </div>
+            </div>
+          {% else %}
+          <div id="dis_bajoE">
+            <br>
+            <label style="color: black;"> No hay productos Registrados </label>
+            <a href="{% url 'Admin_v/productos' %}">
+              <button class="btn"> Ver Productos </button>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </header>
+  
+      <div id="hdrctn">
+          <header id="header2">
+              <div id="lasSecci">
+                  <div class="mt-2 ml-2">
+                      <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                      <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                      <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                      <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                      <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                      <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                      <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+                  </div>
+              </div>
+          </header>
+      </div>
+
+<div id="imgFi"></div>
+
+<div id="ctnPD">
+    <div id="ctnPS">
+        <div id="ctnHijo" class= "mt-4 mb-5"> 
+            {% if Error %}
+               <input type="hidden" name="error" id="error" value="{{Error}}"> 
+            {% endif %}
+
+            <div id="divIE">
+                <div class="lineas" id="linea1"></div>
+                <div>   
+                    <img src="{% static 'imagenes/tracking_ae/form_i.png' %}" style="opacity: 0.4;" width="80px" height="80px" class="mt-3 ml-3 mb-3">
+                </div>
+                <div class="lineas" id="linea2"></div>
+            </div> 
+
+            <div class="ml-3">
+                <h4> Rellene el Formulario </h4>
+                <label class="mt-3" style="color: black; font-weight: bold;"> Opciones de formulario </label> <br>
+                <select name="slct_opc" id="slct_opc" >
+                    <option value="new" selected> Nuevo </option>
+                    <option value="exist"> Existente </option>
+                </select> <br>
+                <select name="slct_exist" id="slct_exist">
+                    <option value=""> Seleccione el que desea utilizar </option>
+                </select>
+            </div>
+
+            <div id="ctnSh" class="ml-3">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="latitud" name="latitud" value="">
+                    <input type="hidden" id="longitud" name="longitud" value="">
+                    <input type="hidden" id="id" name="id" value="">
+
+                    <div style="font-weight: bold;">
+                        <label style="color:black;"> Datos Personales </label>
+                    </div>
+
+                    <div class="label_inputs">
+                        <label for=""> Nombre </label> <br>
+                        <input type="text" id="nombre" name="nombre" value="{{request.user.username}}" readonly> <br>
+                        <label for=""> Correo Electronico </label> <br>
+                        <input type="text" id="email" name="email" value="{{request.user.email}}" readonly> <br>
+                        <label for=""> Numero de telefono </label> <br>
+                        {{form.cel}} 
+                        <br>
+                        <label for=""> Cedula Personal</label> <br> 
+                        {{form.cedula}}
+                    </div> <br>
+                    
+                    <div style="font-weight: bold;">
+                        <label style="color:black;"> Datos de Ubicacion </label>
+                    </div>    
+
+                    <div class="label_inputs">
+                        <label for=""> Ubicacion</label> <br>
+                        <div id="map" class="mr-5"></div>
+                        <label for=""> Provincia </label> <br>
+                        {{form.provincia}} <br>
+                        <label for=""> Ciudad </label> <br>
+                        {{form.ciudad}} <br>  
+                        <label for=""> Barrio </label> <br>
+                        {{form.barrio}} <br>                     
+                    </div> <br><br>
+            </div>
+        </div>
+        <div id="ctnHijo2" class="mt-4 ml-5">
+            <div style="border: 1px solid rgba(10, 116, 12, 0.308);">
+                <div class="ml-5 mt-3">
+                    <div>
+                        <label style="font-size: 20px; font-weight: bold;"> Tipo de Pago </label>
+                    </div>
+                    <input type="radio" id="tarjeta" name="pago" value="tarjeta">
+                    <label style="color:black;"> <img src="{% static 'imagenes/tracking_ae/tarjeta.png' %}" width="50px" height="40px"> Tarjeta de Credito </label>
+
+                    <input type="radio" id="efectivo" name="pago" value="efectivo">
+                    <label style="color:black;"> <img src="{% static 'imagenes/tracking_ae/efectivo.png' %}" width="50px" height="50px"> Efectivo</label><br>
+
+                    <div id="tarjetaa" class="input-container mt-3">
+                        <div class="cdt mb-3 mt-2">
+                            <label id="lnt"> Número de tarjeta </label>
+                            <input type="text" id="nt" name="nt" placeholder="Número de tarjeta">
+                        </div>
+                        <div class="cdt mt-4">
+                            <label id="lma"> MM/AA </label>
+                            <label id="lcds">Codigo de seguridad</label>
+                            
+                            <input type="text" id="ma" name="ma" placeholder="MM/AA">
+                            <input type="text" id="cds" name="cds" placeholder="Codigo de seguridad">
+                        </div>
+                        <div class="cdt mt-4">
+                            <label id="lname">Nombre del titular</label>
+                            <input type="text" id="name" name="name" value="{{request.user.username}}" placeholder="Nombre del titular">
+                        </div>
+                    </div>
+
+                    <div id="conf" class="cdt mt-3 ">
+                        <button type="button" class="btn" id="btn_c" data-toggle="modal" data-target="#confirmModal"> Confirmar </button>
+                        <button type="submit" class="btn" id="btn_ce"> Confirmar </button>
+                    </div>
+                </div> 
+                
+                <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Desea Guardar el Registro?</p>
+                                <div id="formNameInput" style="display: none;">
+                                    <label for="formName" style="color:black; font-size:14px;">Nombre:</label>
+                                    <input type="text" id="guardar_n" name="guardar_n">
+                                    <input type="hidden" id="opcion" name="opcion">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="submit" name="btn_no" id="btn_no" >No</button>
+                                <button id="confirmSave" type="button" class="btn btn-primary">Sí</button>
+                                <button id="saveForm" type="submit" class="btn btn-primary" style="display: none;">Guardar</button>
+                                <button id="dontSave" type="button" class="btn btn-secondary" data-dismiss="modal" style="display: none;">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="divIE">
+                    <div class="lineas" id="linea1"></div>
+                    <div>   
+                        <img src="{% static 'imagenes/tracking_ae/form.png' %}" style="opacity: 0.4;" width="80px" height="80px" class="mt-3 ml-3 mb-3">
+                    </div>
+                    <div class="lineas" id="linea2"></div>
+                </div>  
+            </div>
+        </div>
+                </form>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</body>
+<script src="{% static 'js/tracking.js' %}"></script>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>

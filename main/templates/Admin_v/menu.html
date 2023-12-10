@@ -1,0 +1,321 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>FrescoMarket - Menu</title>
+</head>
+<body>
+    {% block content %}
+    <span hidden> {% csrf_token %} </span>
+    <header id="header">
+      <div id="hdPri"> 
+          <div id="btncont" class="mt-2 mr-2">
+              <button id="user_log" class="mr-5">
+                  <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                  <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+              </button>
+
+              <button id="secciones" class="mr-5"> 
+                 <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+
+              <button id="btncar" class="mr-3">
+                  <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+              </button>
+
+              <button id="btnLog" class="mr-2">
+                  <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+              </button>
+          </div>
+      </div> 
+
+      <div id="white">
+          <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+          <button id="home"> 
+              <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+          </button>
+      </div>
+
+      <div id="carrito_h">
+        <div id="ttl_carro" > 
+          <h4> Productos en el carro </h4>
+        </div>
+        {% if pro_carrito %}
+          <div id="scrollT">
+            <table class="ml-4 mt-2 mb-3">
+              <tbody>
+                  {% for pro in pro_carrito %}
+                      <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                          <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                          <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                          <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                              {{ pro.producto.precio }}
+                          </td>
+                          <td style="width: 80px;"> 
+                              <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                              <span class="cantidad"> {{ pro.cantidad }} </span>
+                              <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>
+                          </td>
+                          <td>
+                          <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                          </td>
+                      </tr>
+                  {% endfor %}   
+              </tbody>
+          </table>
+        </div>
+          <div id="diseño_bajo"> 
+            <label id="subtotall" class="ml-4"> </label> <br>
+            <div style="text-align: center; " class="mt-2">
+              <a href="{% url 'Admin_v/carrito' %}">
+                <button class="btn"> Finalizar Compra </button>
+              </a>
+            </div>
+          </div>
+        {% else %}
+        <div id="dis_bajoE">
+          <br>
+          <label style="color: black;"> No hay productos Registrados </label>
+          <a href="{% url 'Admin_v/productos' %}">
+            <button class="btn"> Ver Productos </button>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </header>
+
+    <div id="hdrctn" style="position:relative">
+        <header id="header2">
+            <div id="lasSecci">
+                <div class="mt-2 ml-2">
+                    <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                    <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                    <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                    <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                    <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                    <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                    <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div id="ctnPB">
+      <div id="ctnSB">
+        <label for="Busqueda" class="mt-4" style="font-family: cursive; font-size: 20px; font-weight: bold; color: black;"> Buscar: </label>
+        <div id="ctnIP">
+          <input type="text" id="search_P" name="search_P" style="width: 400px; height: 40px;" placeholder="Escriba el nombre del producto">
+          <div id="Productos" style="z-index: 2;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="myCarousel" class="carousel slide mt-4" data-ride="carousel" align="center" style="z-index: 1;">
+        <!-- Indicadores -->
+        <ul class="carousel-indicators">
+          {% for pro, img in imgData %}
+              <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+          {% endfor %}
+      </ul>
+  
+      <!-- Imágenes del carrusel -->
+      {% for imgs in img_promos %}
+        <input type="hidden" value="{{imgs}}" id="lasimg" class="lasimg">
+      {% endfor %}
+
+      <div class="carousel-inner" id="divIMG">
+        {% for pro in promo %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <button style="background: none; border: none;" class="btn-carroo" id="btnn{{ forloop.counter }}" data-pro="{{ pro.id }}">
+                    <img id="Imgs_p" class="Imgs_p" width="100%">
+                </button>
+            </div>
+        {% endfor %}
+      </div>
+        <!-- Controles del carrusel -->
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Siguiente</span>
+        </a>
+      </div>
+
+      <div id="CtnPapa">
+        <!--Productos-->
+        <div style="border: 1px solid rgba(10, 116, 12, 0.308);" class="mt-5">
+
+          <div id="divIE" class="mt-4">
+            <div id="linea1" class="lineas"></div>
+            <div> 
+              <img src="{% static 'imagenes/menu_ae/Productos.png' %}" width="100px" height="120px" style="opacity: 0.4;"> 
+            </div>
+            <div id="linea2" class="lineas"></div>
+          </div>
+
+          <div style="text-align: center; font-family: cursive;">
+            <h4 class="mt-3" style="font-weight: bold; 
+            font-size: 30px; color: rgb(5, 5, 113);"> Productos </h4>
+          </div>
+
+          <div style="overflow: hidden;" class="mt-2 mb-3">
+            <div id="ctnAP" class="mr-5 mb-3">
+              <a href="{% url 'Admin_v/productos' %}"> Ver todos los productos</a>
+            </div>
+            <div id="slider" class="sliderr">
+              <button id="prev" class="btnMove"> << </button>
+              {% for pro in bd_productos %}
+              <div id="slider_h" class="slider_h">
+                <div style="border: grey solid 8px; width: 200px; height: 200px; border-radius: 20px;">
+                  <a href="{% url 'Admin_v/ver_productos' pro.id %}">
+                    <img src="{{pro.img.url}}" width="140px" height="140px" style="margin-top: 20px;">
+                  </a>
+                </div>
+                <label class="ml-2" style="color: rgb(12, 12, 129); font-weight: bold;"> $ {{pro.precio}}</label> 
+                <label class="ml-2" style="color: grey; font-size: 18px;">{{pro.name}} </label>
+                <div class="mb-2 mt-2">
+                  <button class="btn-carro" id="btn1" data-pro="{{pro.id}}"> Añadir al Carro </button> 
+                </div>
+              </div>                
+              {% endfor %}    
+            <button id="next" class="ml-3 btnMove"> >> </button>
+            </div>            
+          </div>
+
+          <div class="modal" id="modalAgregarAlCarrito">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <!-- Encabezado del Modal -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Agregar al carrito</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Contenido del Modal -->
+                <div class="modal-body">
+                  <label for="cantidad" style="color: black;">Cantidad:</label>
+                  <input type="number" id="cantidad" class="form-control" value="1">
+                </div>
+                <!-- Footer del Modal -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary" id="confirmarAgregar">Confirmar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+          <div id="divIE" class="mb-5">
+            <div id="linea1" class="lineas"></div>
+            <div> 
+              <img src="{% static 'imagenes/menu_ae/Producto_fel.png' %}" width="140px" height="120px" style="opacity: 0.4;"> 
+            </div>
+            <div id="linea2" class="lineas"></div>
+          </div>
+
+        </div>
+
+
+        <!--Recetas-->
+        <div style="border: 1px solid rgba(10, 116, 12, 0.308);" class="mt-5">
+          
+          <div id="divIE" class="mt-4">
+            <div class="lineas" id="linea1"></div>
+            <div>
+              <img src="{% static 'imagenes/menu_ae/receta.png' %}" width="140px" height="120px" style="opacity: 0.4;"> 
+            </div>
+            <div class="lineas" id="linea2"></div>
+          </div>
+
+          <div style="text-align: center; font-family: cursive; ">
+            <h4 class="mt-2" style="font-weight: bold; 
+            font-size: 30px; color: rgb(5, 5, 113);"> Recetas </h4>
+          </div>
+
+          <div style="overflow: hidden;" class="mt-2">
+
+            <div id="ctnAR" class="mr-5 mb-3">
+              <a href="{% url 'Admin_v/recetas' %}"> Ver todas las recetas</a>
+            </div>
+
+            <div id="SlideRR" class="sliderrr">
+              <button id="prevv" class="btnMoveR"> << </button>
+              {% for rec in bd_recetas %}
+              <div id="slider_R" class="slider_R">
+                <div style="border: grey solid 8px; width: 300px; height: 300px; border-radius: 20px;">
+                  <a href="{% url 'Admin_v/ver_receta' rec.id %}">
+                    <img src="{{rec.imagen.url}}" width="240px" height="240px" style="margin-top: 20px;">
+                  </a>
+                </div>
+                <label class="ml-2" style="color: grey; font-size: 20px; font-weight: bold;">{{rec.nombre}} </label>
+              </div>                
+              {% endfor %}    
+            <button id="nextt" class="btnMoveR"> >> </button>
+            </div>            
+          </div>
+
+          <div id="divIE" class="mb-5 mt-5">
+            <div id="linea1" class="lineas"></div>
+            <div> 
+              <img src="{% static 'imagenes/menu_ae/receta_fi.png' %}" width="140px" height="120px" style="opacity: 0.4;"> 
+            </div>
+            <div id="linea2" class="lineas"></div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <header class="text-white py-3" id="hder">
+        <div class="container">
+            <div id="ctn2"> 
+                <h5> Deje su opinion sobre Nosotros</h5>
+                <label for=""> Escriba su opinion aqui:</label><br>
+                <textarea name="pag_op" id="pag_op" cols="25" rows="2"></textarea>
+                <br>
+                <button class="btn btn-primary"> Enviar </button>
+            </div>
+
+            <div id="ctn1_1">
+                <h5 align="center">Nosotros</h5><br>
+                <div id="ctn1">
+                    <div id="ctnF" >
+                        <a href="">
+                        <img width="60px" src="{% static 'imagenes/menu_ae/fb.png' %}" alt="Facebook"><br>
+                        </a>
+                    </div>
+
+                    <div id="ctnI" >
+                        <a href="">
+                        <img width="60px" src="{% static 'imagenes/menu_ae/ig.png' %}"  alt="Instagram"><br>
+                        </a>
+                    </div>
+
+                    <div id="ctnT" >
+                        <a href="">
+                        <img width="60px" src="{% static 'imagenes/menu_ae/tw.png' %}"  alt="Twitter"><br>
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <h5 align="center">Gracias Por Visitarnos :) </h5>
+            </div>
+        
+            <div id="ctn3">
+                <img src="{% static 'imagenes/menu_ae/android.png' %}" width="150px" id="img2">
+                <img src="{% static 'imagenes/menu_ae/dulce.png' %}" width="150px" id="img1">
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+</body>
+<script src="{% static 'js/base.js' %}"></script>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>

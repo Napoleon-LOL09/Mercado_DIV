@@ -1,0 +1,328 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/ver_pro.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>{{pro.name}} - Productos</title>
+</head>
+<body>
+{% block content %}
+<span hidden> {% csrf_token %} </span>
+<header id="header">
+    <div id="hdPri"> 
+        <div id="btncont" class="mt-2 mr-2">
+            <button id="user_log" class="mr-5">
+                <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+            </button>
+
+            <button id="secciones" class="mr-5"> 
+               <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+
+            <button id="btncar" class="mr-3">
+                <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+            </button>
+
+            <button id="btnLog" class="mr-2">
+                <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+            </button>
+        </div>
+    </div> 
+
+    <div id="white">
+        <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+        <button id="home"> 
+            <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+        </button>
+    </div>
+
+    <div id="carrito_h">
+        <div id="ttl_carro" > 
+            <h4> Productos en el carro </h4>
+        </div>
+        {% if pro_carrito %}
+        <div id="scrollT">
+            <table class="ml-4 mt-2 mb-3">
+                <tbody>
+                {% for pro in pro_carrito %}
+                    <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                        <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                        <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                        <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                            {{ pro.producto.precio }}
+                        </td>
+                        <td style="width: 80px;"> 
+                        <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                        <span class="cantidad"> {{ pro.cantidad }} </span>
+                        <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>                                </td>
+                        <td>
+                        <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        </td>
+                    </tr>
+                {% endfor %}   
+                </tbody>
+            </table>
+        </div>
+        <div id="diseño_bajo"> 
+          <label id="subtotall" class="ml-4"> </label> <br>
+          <div style="text-align: center; " class="mt-2">
+            <a href="{% url 'Admin_v/carrito' %}">
+              <button class="btn"> Finalizar Compra </button>
+            </a>
+          </div>
+        </div>
+      {% else %}
+      <div id="dis_bajoE">
+        <br>
+        <label style="color: black;"> No hay productos Registrados </label>
+        <a href="{% url 'Admin_v/productos' %}">
+          <button class="btn"> Ver Productos </button>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+</header>
+
+<div id="hdrctn">
+    <header id="header2">
+        <div id="lasSecci">
+            <div class="mt-2 ml-2">
+                <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div id="ImgFon"> 
+    <div>
+        <label class="ml-5" style="width: 600px;  transform: translateY(-5%); position: relative; color: rgb(11, 11, 124); font-size: 72px; font-family: cursive; font-weight: bold; top: 35%; left: 30px;">Productos </label>
+    </div>
+</div>
+
+    <div id="ctnPa">
+        <div id="ctnPd" class="mt-4">
+            <div id="ctnPd2" class="ml-4 mr-4">
+
+                <div id="divIE" class="mt-3">
+                    <div class="lineas" id="linea1"></div>
+                    <div>
+                        <img src="{% static 'imagenes/menu_ae/productos.png' %}" width="90px" height="110px" style="opacity: 0.5;">
+                    </div>
+                    <div class="lineas" id="linea2"></div>
+                </div>
+                
+                <div style="display: flex;" class="mb-2 ml-4">
+                    <h4 style="font-weight: bold; font-size: 28px; color: rgb(10, 10, 100);"> Producto </h4> 
+                </div>
+
+                <div id="datos" class="ml-4">
+                    <label style="font-weight: bold; color: black;" class="Wid"> Nombre </label> <br>
+                    <label class="rel" style="color: black;">{{pro.name}}</label> <br>
+                    <label style="font-weight: bold; color: black;" class="Wid"> Descripcion </label> <br>
+                    <label class="rel" style="color: black;">{{pro.descripcion}}</label><br>
+                    <label style="font-weight: bold; color: black;" class="Wid"> Categoria</label> <br>
+                    <label class="rel" style="color: black;">{{pro.categoria.name}}</label><br>
+                    <label style="font-weight: bold; color: black;" class="Wid"> Precio </label> <br>
+                    <label class="rel" style="color: black;">$ {{pro.precio}}</label> 
+                </div>
+
+                <div class="ml-3 mt-3 mb-4">
+                    <button class="btn" id="carro" value="{{pro.id}}"> Añadir al Carro </button>
+                </div>
+                
+                <div class="modal" id="modalAgregarAlCarrito">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <!-- Encabezado del Modal -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">Agregar al carrito</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Contenido del Modal -->
+                        <div class="modal-body">
+                          <label for="cantidad" style="color: black;">Cantidad:</label>
+                          <input type="number" id="cantidad" class="form-control" value="1">
+                        </div>
+                        <!-- Footer del Modal -->
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                          <button type="button" class="btn btn-primary" id="confirmarAgregar">Confirmar</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div id="divIE">
+                    <div class="lineas" id="linea1"></div>
+                    <div>
+                        <img src="{% static 'imagenes/menu_ae/producto_fel.png' %}" width="110px" height="100px" style="opacity: 0.5;">
+                    </div>
+                    <div class="lineas" id="linea2"></div>
+                </div>
+
+            </div>  
+        </div>
+
+        <div class="mt-5 ml-5" style="border: 1px solid rgba(10, 116, 12, 0.308); height: max-content;">
+
+            <div id="divIE" class="mt-4">
+                <div class="lineas" id="linea1"></div>
+                <div>
+                    <img src="{% static 'imagenes/productos_ae/foto.png' %}" width="100px" height="80px" style="opacity: 0.5; ">
+                </div>
+                <div class="lineas" id="linea2"></div>
+            </div>
+
+            <div class="ml-5 mt-3">
+                <label style="font-weight: bold; font-size: 20px; color:rgb(10, 10, 100) ;"> Imagen </label>
+            </div>
+
+            <div class=" ml-5 mr-5 mb-5">
+                <img src="{{pro.img.url}}" width="400px" height="300px" style="border: black solid;"> <br>
+                <label class="mt-2" style="color:black; font-size: 20px;"> {{pro.name }}</label>
+            </div>
+        </div>
+    </div>
+
+    <div style="font-family: cursive; position: relative;" class="ml-5 mt-5">
+    
+        <div class="mb-2 ">
+            <h4 style="font-weight: bold; color: rgb(5, 5, 113);"> Comentarios ({{coment_totP}})</h4>
+        </div>
+
+        <div style="display: flex;" class="mb-4">
+            <div style="display: flex; flex-direction: column;">
+                <label style="color:black;"> Esta comentando como {{request.user.username}}, ¿Desea usa otro usuario? <a href="{% url 'logout' %}"> Cerrar Sesion </a></label>
+                <input type="hidden" id="inptName" value="{{request.user.id}}">
+                <input type="hidden" id="inptid" value="{{pro.id}}">
+                <div style="display: flex;">
+                    <div class="mt-2"> <img src="{% static 'imagenes/bitacora_ae/coment.png' %}" width="80px" height="80px"> </div>
+                    <div class="ml-4">
+                        <textarea name="comentar1" id="comentar1" cols="120" rows="4" placeholder="Escriba su comentario..."></textarea>
+                        <button id="publicar_c"  class="btn"> Comentar </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="divIE">
+            <div class="lineas" id="linea1"></div>
+            <div> <img src="{% static 'imagenes/bitacora_ae/comentarios.png' %}" width="60px" height="60px" style="opacity: 0.3;"></div>
+            <div class="lineas mr-5" id="linea2"></div>
+        </div>
+    
+
+        <div style="display:flex; flex-direction: column;" class="ml-2 mr-5">     
+            {% for coments in coments_p %}
+                <div style="display: flex; align-items: center;" class=""> 
+                    <img src="{% static 'imagenes/bitacora_ae/coment.png' %}" alt="" width="65px" height="65px">
+                    <div class="ml-2">
+                        <label style="color: rgb(22, 22, 169); margin: 0; font-weight: bold;">{{coments.user.username}} </label><br>
+                        <label style="color: grey; margin: 0; font-size: 17px;">{{coments.fecha}} </label><br>
+                        {{coments.comentario}}
+                    </div>
+                </div> 
+                
+                <div style="position: relative; margin-left: 74px; " class="mb-3 mt-2">
+                    <div style="display: flex;">
+                        <form action="{% url 'comnetPro_S' %}" method="POST" >
+                            {% csrf_token %}
+                            <input type="hidden" name="comentario_id" value="{{ coments.id }}">
+                            <input type="hidden" name="tipo" value="LIKE">
+                            <input type="hidden" name="producto_id" value="{{ pro.id }}">
+                            <button type="submit" style="border: none; background: none; color: grey; font-weight: bold;"> 
+                                <img src="{% static 'imagenes/bitacora_ae/like.png' %}" width="30px" height="30px"> {{coments.like}}
+                            </button>
+                        </form>
+                   
+                        <form action="{% url 'comnetPro_S' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="comentario_id" value="{{ coments.id }}">
+                            <input type="hidden" name="tipo" value="DISLIKE">
+                            <input type="hidden" name="producto_id" value="{{ pro.id }}">
+                            <button type="submit" style="border: none; background: none; color: grey; font-weight: bold;"> 
+                                <img src="{% static 'imagenes/bitacora_ae/dislike.png' %}" width="30px" height="30px"> {{coments.dislike}} 
+                            </button>
+                        </form>
+                    <button type="text" class="mostrar" data-btnsect="{{coments.id}}" style="background: none;border: none; color: grey; font-weight: bold;"> Responder </button>
+                    {% if request.user.username == "Admin" %}
+                    <button style="background: none;border: none; ; font-weight: bold;"> 
+                       <a href="{% url 'eliminar_comentP' coments.id pro.id %}" style="color: rgb(198, 11, 11)">  Eliminar </a>
+                    </button>
+                    {% elif coments.user_id == request.user.id %}
+                    <button style="background: none;border: none; ; font-weight: bold;"> 
+                        <a href="{% url 'eliminar_comentP' coments.id pro.id %}" style="color: rgb(198, 11, 11)">  Eliminar </a>
+                    </button>
+                    {% else %}
+                    {% endif %}
+                    </div> 
+    
+                    <div style="display: flex; " class="comentarr mt-3" data-seccion="{{coments.id}}">
+                        <img src="{% static 'imagenes/bitacora_ae/coment.png' %}" width="65px"  height="65px">
+                        <div class="ml-3" style="width: 80%;" >
+                            <form action="{% url 'comnetPro_S' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="comentario_id" value="{{ coments.id }}">
+                                <input type="hidden" name="producto_id" value="{{ pro.id }}">
+                                <input type="hidden" name="tipo" value="COMENTARIO">
+                                <textarea name="texto_comentario" style="width: 80%; height: 100px;" placeholder="Comentario..."></textarea><br>
+                                <button type="submit" class="btn" style="color: white; background-color: rgb(5, 5, 113)" id="btnComent">Comentar</button>
+                            </form>
+                        </div>
+                    </div> 
+                    {% for comment_user in coment_pro_s %}
+                        {% for comment_use in comment_user %}
+                            {% if comment_use.tipo == 'COMENTARIO' %}
+                                {% if comment_use.coment_proo_id == coments.id %}
+                                    <div class="mt-4 mb-3" style="display: flex;">
+                                        <img src="{% static 'imagenes/bitacora_ae/coment.png' %}" width="65px" height="65px">
+                                        <div class="ml-3" style="width: 80%;">
+                                            <label style="color: rgb(22, 22, 169); margin: 0; font-weight: bold;">{{ comment_use.user.username }}</label><br>
+                                            <label style="color: grey; margin: 0; font-size: 17px;">{{ comment_use.fecha }}</label><br>
+                                            <label style="margin: 0; color: black;">{{ comment_use.comentario }}</label>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>    
+            {% endfor %}
+
+            <div class="mt-1 text-center" style="font-weight:bold; font-size:20px">
+                <span class="step-links">
+                    {% if coments_p.has_previous %}
+                        <a href="?page=1">&laquo; </a>
+                        <a href="?page={{ coments_p.previous_page_number }}"> « </a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Página {{ coments_p.number }} de {{coments_p.paginator.num_pages }}.
+                    </span>
+            
+                    {% if coments_p.has_next %}
+                        <a href="?page={{ coments_p.next_page_number }}"> » </a>
+                        <a href="?page={{ coments_p.paginator.num_pages }}">&raquo;</a>
+                    {% endif %}
+                </span> 
+            </div>
+    </div>
+{% endblock %}   
+</body>
+<script src="{% static 'js/ver_productos.js' %}"></script>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>

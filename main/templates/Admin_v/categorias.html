@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/categorias.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Categorias de Productos</title>
+</head>
+<body>
+    {% block content %}
+    <header id="header">
+        <div id="hdPri"> 
+            <div id="btncont" class="mt-2 mr-2">
+                <button id="user_log" class="mr-5">
+                    <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                    <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+                </button>
+  
+                <button id="secciones" class="mr-5"> 
+                   <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+  
+                <button id="btncar" class="mr-3">
+                    <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+                </button>
+  
+                <button id="btnLog" class="mr-2">
+                    <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+                </button>
+            </div>
+        </div> 
+  
+        <div id="white">
+            <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+            <button id="home"> 
+                <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+            </button>
+        </div>
+  
+        <div id="carrito_h">
+          <div id="ttl_carro" > 
+            <h4> Productos en el carro </h4>
+          </div>
+          {% if pro_carrito %}
+          <div id="scrollT">
+            <table class="ml-4 mt-2 mb-3">
+                <tbody>
+                    {% for pro in pro_carrito %}
+                        <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                            <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                            <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                            <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                                {{ pro.producto.precio }}
+                            </td>
+                            <td style="width: 80px;"> 
+                                <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                                <span class="cantidad"> {{ pro.cantidad }} </span>
+                                <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>
+                            </td>
+                            <td>
+                            <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            </td>
+                        </tr>
+                    {% endfor %}   
+                </tbody>
+            </table>
+            </div>
+            <div id="diseño_bajo"> 
+              <label id="subtotall" class="ml-4"> </label> <br>
+              <div style="text-align: center; " class="mt-2">
+                <a href="{% url 'Admin_v/carrito' %}">
+                  <button class="btn"> Finalizar Compra </button>
+                </a>
+              </div>
+            </div>
+          {% else %}
+          <div id="dis_bajoE">
+            <br>
+            <label style="color: black;"> No hay productos Registrados </label>
+            <a href="{% url 'Admin_v/productos' %}">
+              <button class="btn"> Ver Productos </button>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </header>
+  
+      <div id="hdrctn">
+          <header id="header2">
+              <div id="lasSecci">
+                  <div class="mt-2 ml-2">
+                      <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                      <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                      <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                      <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                      <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                      <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                      <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+                  </div>
+              </div>
+          </header>
+      </div>
+  
+        <div id="ImgFon"> 
+            <div>
+                <label class="ml-5" style="width: 600px;  transform: translateY(-5%); position: relative; color: rgb(11, 11, 124); font-size: 72px; font-family: cursive; font-weight: bold; top: 35%; left: 20px;">Categorias </label>
+            </div>
+        </div>
+
+        <div id="contPad" class="mt-4">
+            <div id="fist_cat" class="ml-5">
+                
+                <div id="divIE">
+                    <div class="lineas" id="linea1"></div>
+                    <div>
+                        <img src="{% static 'imagenes/categorias_a/icono2.png' %}" width="90px" height="85px" class="mt-3 mb-3" style="opacity: 0.6;">
+                    </div>
+                    <div class="lineas" id="linea2"></div>
+                </div>
+
+                <div class="mt-3 text-center">
+                    <h4 style="font-weight: bold; color: rgb(5, 5, 113)"> Registrar Catergoria Nueva</h4> <br>
+                </div>
+
+                <div id="ctn_cat">
+                    <form action="" method="post" >
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label class="mb-3"> Nombre Categoria:</label> <br>
+                            {{ form.name }}
+                            {% if Error1 %}
+                                <p class="text-danger font-weight-bold"> {{ Error1 }} </p> 
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label class="mb-3"> Descripcion de Categoria: </label><br>
+                            {{ form.descripcion }}
+                            {% if Error2 %}
+                                <p class="text-danger font-weight-bold" > {{ Error2 }} </p>
+                            {% endif %}
+                        </div>
+
+                        <div class="mt-3 mb-2">
+                            <button type="submit" class="btn" id="btnR"> Registrar </button>
+                        </div>    
+                    </form>
+                </div>
+
+                <div id="divIE">
+                    <div class="lineas" id="linea1"></div>
+                    <div>
+                        <img src="{% static 'imagenes/categorias_a/icono.png' %}" width="70px" height="80px" class="mt-3 mb-3" style="opacity: 0.6;" >
+                    </div>
+                    <div class="lineas" id="linea2"></div>
+                </div>
+
+            </div>    
+            
+            <div class="mb-5 ml-5" style="width: 45%;">
+                <table class="table table-bordered" id="tabla">
+                    <thead>
+                        <tr>
+                            <th colspan="3" style="font-size: 22px; text-align: center; color: rgb(5, 5, 113)"> Categorias Registradas </th>
+                        </tr>
+                        <tr>
+                            <th> Nombre </th>
+                            <th> Descripción </th>
+                            <th> Acciones </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cat in catego  %}
+                        <tr>
+                            <td contenteditable="True" class="edit" data-column="name" data-id="{cat.id}"> {{cat.name }} </td>
+                            <td contenteditable="True" class="edit" data-column="descripcion" data-id="{{cat.id}}"> {{cat.descripcion}} </td>
+                            <td>
+                                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                                <a id="aEA" href="{% url 'eliminar_categoria' cat.id %}" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el usuario?')">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="3" style="text-align: center;">
+                                <span class="step-links">
+                                    {% if catego.has_previous %} 
+                                        <a href="?page=1">&laquo;   </a>
+                                        <a href="?page={{ catego.previous_page_number }}"> ← </a>
+                                    {% endif %}
+                            
+                                    <span class="current-page">
+                                        Página {{ catego.number }} de {{ catego.paginator.num_pages }}.
+                                    </span> 
+                            
+                                    {% if catego.has_next %}
+                                        <a href="?page={{ catego.next_page_number }}"> → </a>
+                                        <a href="?page={{ catego.paginator.num_pages }}">  &raquo;</a>
+                                    {% endif %}
+                                </span>                                      
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+  
+    <br>
+    {% endblock %}
+</body>
+<script src="{% static 'js/categoria.js' %}"></script>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>

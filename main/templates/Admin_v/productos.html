@@ -1,0 +1,312 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/producto.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Productos</title>
+</head>
+<body>
+{% block content %}
+    <header id="header">
+        <div id="hdPri"> 
+            <div id="btncont" class="mt-2 mr-2">
+                <button id="user_log" class="mr-5">
+                    <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                    <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+                </button>
+  
+                <button id="secciones" class="mr-5"> 
+                   <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+  
+                <button id="btncar" class="mr-3">
+                    <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+                </button>
+  
+                <button id="btnLog" class="mr-2">
+                    <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+                </button>
+            </div>
+        </div> 
+  
+        <div id="white">
+            <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+            <button id="home"> 
+                <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+            </button>
+        </div>
+  
+        <div id="carrito_h">
+            <div id="ttl_carro" > 
+                <h4> Productos en el carro </h4>
+            </div>
+            {% if pro_carrito %}
+            <div id="scrollT">
+                <table class="ml-4 mt-2 mb-3">
+                    <tbody>
+                    {% for pro in pro_carrito %}
+                        <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                            <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                            <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                            <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                                {{ pro.producto.precio }}
+                            </td>
+                            <td style="width: 80px;"> 
+                            <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                            <span class="cantidad"> {{ pro.cantidad }} </span>
+                            <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>                                </td>
+                            <td>
+                            <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            </td>
+                        </tr>
+                    {% endfor %}   
+                    </tbody>
+                </table>
+            </div>
+            <div id="diseño_bajo"> 
+              <label id="subtotall" class="ml-4"> </label> <br>
+              <div style="text-align: center; " class="mt-2">
+                <a href="{% url 'Admin_v/carrito' %}">
+                  <button class="btn"> Finalizar Compra </button>
+                </a>
+              </div>
+            </div>
+          {% else %}
+          <div id="dis_bajoE">
+            <br>
+            <label style="color: black;"> No hay productos Registrados </label>
+            <a href="{% url 'Admin_v/productos' %}">
+              <button class="btn"> Ver Productos </button>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+    </header>
+  
+    <div id="hdrctn">
+        <header id="header2">
+            <div id="lasSecci">
+                <div class="mt-2 ml-2">
+                    <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                    <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                    <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                    <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                    <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                    <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                    <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div id="ImgFon"> 
+        <div>
+            <label class="ml-5" style="width: 600px;  transform: translateY(-5%); position: relative; color: rgb(11, 11, 124); font-size: 72px; font-family: cursive; font-weight: bold; top: 35%; left: 30px;">Productos </label>
+        </div>
+    </div>
+
+    <div id="contPad" class="mt-4">
+        <div id="fist_cat" class="ml-5">
+            
+            <div id="divIE">
+                <div class="lineas" id="linea1"></div>
+                <div>
+                    <img src="{% static 'imagenes/productos_ae/logoo.png' %}" width="100px" height="100px" class="mt-3 mb-3" style="opacity: 0.6;">
+                </div>
+                <div class="lineas" id="linea2"></div>
+            </div>
+
+            <div class="mt-1 text-center">
+                <h4 style="font-weight: bold; color: rgb(5, 5, 113); font-size: 27px;"> Registrar Nuevo Producto</h4> <br>
+            </div>
+
+            <div id="ctn_cat">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <label class="mb-3"> Nombre </label> <br>
+                        {{ form.name }}
+                        {% if Error_P %}
+                            <p class="text-danger font-weight-bold"> {{ Error_P }} </p> 
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label class="mb-3"> Descripcion </label><br>
+                        {{ form.descripcion }}
+                        {% if Error_PD %}
+                            <p class="text-danger font-weight-bold" > {{ Error_PD }} </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label > Precio </label><br>
+                        {{ form.precio }}
+                    </div>
+
+                    <div class="mb-2">
+                        <label> Categoria </label><br>
+                        {{ form.categoria }}
+                    </div>
+
+                    <div class="mb-2">
+                        <label> Imagen </label><br>
+                        {{ form.img }}
+                    </div>
+
+                    <div class="mt-3 mb-2">
+                        <button type="submit" class="btn" id="btnR"> Registrar </button>
+                    </div>    
+                </form>
+            </div>
+
+            <div id="divIE">
+                <div class="lineas" id="linea1"></div>
+                <div>
+                    <img src="{% static 'imagenes/productos_ae/logo.png' %}" width="80px" height="80px" class="mt-3 mb-3" style="opacity: 0.6;" >
+                </div>
+                <div class="lineas" id="linea2"></div>
+            </div>
+
+        </div>
+
+        <div id="divtableP" class="ml-5 text-center">
+            <table class="table table-bordered text-center" id="tableP">
+                <thead>
+                    <tr>
+                        <th colspan="4" style=" vertical-align: middle; height: 100px; font-size: 30px; font-weight: bold; color: rgb(5, 5, 113)"> Productos Registrados </th>
+                    </tr>
+                    <tr>
+                        <th> Nombre </th>
+                        <th> Precio </th>
+                        <th> Categoria </th>
+                        <th>  </th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for pro in bd_pro2 %}
+                    <tr>
+                        <td style="vertical-align: middle;"> {{pro.name}} </td>
+                        <td style="vertical-align: middle;"> {{pro.precio}} </td>
+                        <td style="vertical-align: middle;"> {{pro.categoria}} </td>
+                        <td style="vertical-align: middle;"> 
+                            <a href="{% url 'Admin_v/editar_producto' pro.id %}" class="btn" style="background-color: #265073; color: white;">Editar</a>
+                            <a href="{% url 'eliminar_producto' pro.id %}" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el producto?')">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+                <thead>
+                    <tr>
+                        <th colspan="4"> 
+                            <div class="mb-3 mt-3" align="center">
+                                <span class="step-links">
+                                    {% if bd_pro2.has_previous %} 
+                                        <a href="?page1={{ bd_pro2.previous_page_number }}"> &laquo; </a>
+                                    {% endif %}
+                            
+                                    <span class="current-page">
+                                        Página {{ bd_pro2.number }} de {{ bd_pro2.paginator.num_pages }}.
+                                    </span> 
+                                                        
+                                    {% if bd_pro2.has_next %}
+                                        <a href="?page1={{ bd_pro2.next_page_number }}">&raquo;</a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <div id="ctnpRR">
+            <h4 class="mb-2 mt-3 font-weight-bold" style="text-align: center; color: rgb(12, 12, 129); font-size: 40px;"> Productos </h4>
+            <div>
+                <div class="text-center mb-4" style="display: flex; flex-direction: column; align-items: center;">
+                    <br>
+                    <input type="text" id="search" style="width: 50%; padding: 15px; border-radius: 30px; border: #265073 solid; z-index: 2;" placeholder="Buscar productos...">
+                    <div id="ctn_fil_a">
+                        <div id="result_fil"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="ctnpR" style="display: flex; flex-wrap: wrap; width: 1310px;">
+                {% for pro in bd_pro %}
+                        <div class="item text-center" data-category="{{pro.categoria.name}}" style="width: 25%; padding: 10px; align-items: center; display:flex; flex-direction: column; margin-bottom: 20px;">  
+                        
+                            <div style="border: #265073 solid 9px; border-radius: 30px; width: 90%; height: 255px;">
+                                <a href="{% url 'Admin_v/ver_productos' pro.id %}">
+                                    <img src="{{ pro.img.url }}" width="190px" height="190px" class="mt-3">
+                                </a>
+                            </div>
+
+                            <label class="mt-2" style="color: rgb(12, 12, 129); font-weight: bold;"> Precio: {{ pro.precio }} </label>
+                            <label style="color: grey; font-size: 18px; font-weight: bold;" > {{ pro.name }} </label>
+                            
+                            <div>
+                            <button id="btnCar" data-producto_id="{{ pro.id }}" class="btnCar btn" style="border-radius: 30px; padding: 7px; width: 250px; background-color: #2a7326; color: white; font-size: 18px; font-weight: bold;"> Al Carro </button>
+                                <a href="{% url 'Admin_v/ver_productos' pro.id %}" class="a_href" >
+                                </a>
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="" style="text-align: center; font-size: 21px; font-weight: bold;">
+            <span class="step-links">
+                {% if bd_pro.has_previous %}
+                    <a href="?page={{ bd_pro.previous_page_number }}">&laquo;</a>
+                {% endif %}
+                
+                <span class="current">
+                    Página {{ bd_pro.number }} de {{ bd_pro.paginator.num_pages }}.
+                </span>
+                
+                {% if bd_pro.has_next %}
+                    <a href="?page={{ bd_pro.next_page_number }}">&raquo;</a>
+                {% endif %}
+            </span>
+    </div>
+
+
+    <div class="modal" id="modalAgregarAlCarrito">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Encabezado del Modal -->
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar al carrito</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Contenido del Modal -->
+            <div class="modal-body">
+              <label for="cantidad" style="color: black;">Cantidad:</label>
+              <input type="number" id="cantidad" class="form-control" value="1">
+            </div>
+            <!-- Footer del Modal -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="confirmarAgregar">Confirmar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+<br>
+{% endblock  %}
+</body>
+<script src="{% static 'js/productos.js' %}"></script>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>

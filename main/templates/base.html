@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Inicio</title>
+</head>
+
+<body>
+
+<style>
+    body{
+        background-image: url('{% static "imagenes/logreg/inicio.png" %}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+    {%block content%}
+            <div id="ctnL" class="container"> <!-- Contenedor del log in -->
+                <form action="" method="post">
+                    {% csrf_token %}
+                        <div id="imgL" class="mb-3">
+                            <img src="{% static 'imagenes/logreg/log.png' %}" class="mt-4 mb-3" width="200px" height="115px">
+                        </div>
+                        <h5 align="center" class="mb-4" style="font-weight: bold;">Iniciar Sesión</h5> 
+                        <div class="ml-4 font-italic">
+                            <p> Llene sus datos correctamente </p>
+                            <label for="usuario" class="mt-2 mb-2"> Usuario: </label> <br>
+                                {{ formL.username }} <br>
+                            <label for="Contraseña" class="mt-2 mb-2"> Contraseña: </label> <br>
+                                {{ formL.password }} <br>
+                            <div class="mt-3" id="error">
+                                {% if Erro_UC %}
+                                    <p class="text-danger font-weight-bold" style="font-size: 15px">{{ Erro_UC }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="mt-3">
+                                <a href="{% url 'reset_password'%}"> ¿Ha olvidado su contraseña? </a>
+                            </div>
+                            <button id="btnL" type="submit" name="login" class="btn mt-3 mb-4">Login</button>
+                        </div>
+                </form>
+            </div>
+           
+            <div id="ctnR" class="container"> <!-- Contenedor del sign in -->
+                <form action="" method="post">
+                    {% csrf_token %}
+                        <div id="imgR" >
+                            <img src="{% static 'imagenes/logreg/registra.png' %}"  width="100px" height="110px" style="margin-top: 15%; margin-left: 10px; margin-right: 8px;">
+                        </div>
+                        <h5 align="center" style="font-weight: bold;">Registrarse</h5>
+                        <div class="ml-5 font-italic">
+                            <p> Llene el formulario con sus datos</p>
+                            <label for="usuario" class="mt-0"> Usuario: </label> <br>
+                                {{ formR.username }} <br>
+                            <div class="mt-2" id="error">
+                                {% if Erro_U %}
+                                    <label class="text-danger font-weight-bold" style="font-size: 13px">{{ Erro_U }}</label>
+                                {% endif %}
+                            </div>
+                            <label for="email" class="mt-1">Correo electronico: </label> <br>
+                                {{ formR.email }} <br>
+                            <div class="mt-2" id="error">
+                                {% if Erro_E %}
+                                    <label class="text-danger font-weight-bold" style="font-size: 13px">{{ Erro_E }}</label>
+                                {% endif %}
+                            </div>
+                            <label for="Contraseña" class="mt-1 "> Contraseña: </label> <br>
+                                {{ formR.password1 }} <br>  
+                            <label for="repetir_contra" class="mt-3"> Repetir Contraseña: </label> <br>
+                                {{ formR.password2 }} <br>
+                            <div class="mt-2" id="error">
+                                {% if Erro_C %}
+                                    <label class="text-danger font-weight-bold" style="font-size: 13px">{{ Erro_C }}</label>
+                                {% endif %}
+                            </div>
+                            <button id="btnR" type="submit" name="register" class="btn mt-2 mb-4">Sign in</button>
+                        </div> 
+                </form>
+            </div>
+            
+            <div id="reg_ext">
+                <label for=""> {% if info %} {{ info }} {% endif %} </label>
+            </div>       
+    {%endblock%}
+</body>
+<script src="{% static 'js/base.js' %}"></script>
+</html>

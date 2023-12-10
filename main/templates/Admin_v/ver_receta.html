@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/ver_recetas.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>{{recetas.nombre}} - Receta</title>
+</head>
+<body>
+{% block content %}
+<header id="header">
+    <div id="hdPri"> 
+        <div id="btncont" class="mt-2 mr-2">
+            <button id="user_log" class="mr-5">
+                <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+            </button>
+
+            <button id="secciones" class="mr-5"> 
+               <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+
+            <button id="btncar" class="mr-3">
+                <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+            </button>
+
+            <button id="btnLog" class="mr-2">
+                <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+            </button>
+        </div>
+    </div> 
+
+    <div id="white">
+        <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+        <button id="home"> 
+            <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+        </button>
+    </div>
+
+    <div id="carrito_h">
+      <div id="ttl_carro" > 
+        <h4> Productos en el carro </h4>
+      </div>
+      {% if pro_carrito %}
+        <table class="ml-4 mt-2 mb-3">
+          <tbody>
+              {% for pro in pro_carrito %}
+                  <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                      <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                      <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                      <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                          {{ pro.producto.precio }}
+                      </td>
+                      <td style="width: 80px;"> 
+                          <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                          <span class="cantidad"> {{ pro.cantidad }} </span>
+                          <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>
+                      </td>
+                      <td>
+                      <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                      </td>
+                  </tr>
+              {% endfor %}   
+          </tbody>
+      </table>
+        <div id="diseño_bajo"> 
+          <label id="subtotall" class="ml-4"> </label> <br>
+          <div style="text-align: center; " class="mt-2">
+            <a href="{% url 'Admin_v/carrito' %}">
+              <button class="btn"> Finalizar Compra </button>
+            </a>
+          </div>
+        </div>
+      {% else %}
+      <div id="dis_bajoE">
+        <br>
+        <label style="color: black;"> No hay productos Registrados </label>
+        <a href="{% url 'Admin_v/productos' %}">
+          <button class="btn"> Ver Productos </button>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <div id="hdrctn">
+      <header id="header2">
+          <div id="lasSecci">
+              <div class="mt-2 ml-2">
+                  <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                  <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                  <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                  <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                  <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                  <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                  <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+              </div>
+          </div>
+      </header>
+  </div>
+
+<span id="tipo" data-tipo="{{recetas.tipo}}"> </span>
+
+<div id="ctnImg"> 
+    <div>
+        <label class="ml-5" style="width: 600px;  transform: translateY(-5%); position: relative; color: rgb(11, 11, 124); font-size: 72px; font-family: cursive; font-weight: bold; top: 30%; left: 30px;">{{recetas.nombre}} </label>
+    </div>
+</div>
+
+<div id="tblImg" class="mt-4 ml-5">
+    <div style="border: rgba(10, 116, 12, 0.308) 1px solid; width: 46%; margin-left: 30px;">
+        <div id="divIE">
+            <div class="lineas" id="linea1"></div>
+            <div>
+                <img src="{% static 'imagenes/recetas_ae/ingre.png' %}" width="100px" height="100px" class="mt-3 ml-3 mb-3">
+            </div>
+            <div class="lineas" id="linea2"></div>
+        </div>
+
+        <div id="ingre" class="mt-3 ml-3">
+            <h4 style="font-weight: bold; color: rgb(10, 10, 100);">INGREDIENTES PARA PREPARAR</h4>
+            {% for line in numeracion.ingre_n %}
+                 <label style="font-size: 30px; position: absolute;">&#8226;</label > <label style= "margin-left: 20px; margin-top: 10px; position:absolute;">{{ line }}</label><br>
+            {% endfor %}
+            <br>  
+        </div>
+
+        <div id="divIE">
+            <div class="lineas" id="linea1"></div>
+            <div>
+                <img src="{% static 'imagenes/recetas_ae/proce.png' %}" width="100px" height="100px" class="mt-1 mr-3 mb-3">
+            </div>
+            <div class="lineas" id="linea2"></div>
+        </div>
+
+        <div id="medio"> </div>
+        <div id="procedi" class="mt-2 ml-3">
+            <h4 style="font-weight: bold; color: rgb(14, 14, 106);" class="mb-4"> PASOS DE PREPARACION </h4>
+            {% for num, line in numeracion.proce_n %}
+             <div style="display: flex; font-weight: bold; font-size: 18px;" class="mb-2" > {{num}}. 
+                <div class="ml-2" style="font-weight: lighter;"> {{line}} </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="porIMG">
+        <img src="{{recetas.imagen.url}}" id="imgRe"> 
+    </div>
+</div>
+
+<div id="Divideo" style="display: flex;">
+    <div style="border: rgba(10, 116, 12, 0.308) 1px solid; width:max-content; left: 14%; position: relative;" class="mt-4">
+        <div id="divIE">
+            <div class="lineas" id="linea1"></div>
+            <div>
+                <img src="{% static 'imagenes/recetas_ae/video_re.png' %}" width="200px" height="200px" class="mt-3 ml-3 mb-3">
+            </div>
+            <div class="lineas" id="linea2"></div>
+        </div>
+
+        <div id="divIE">
+            <div class="ml-5"> 
+                <label style="color: rgb(14, 14, 106); font-weight: bold; font-size: 25px;"> VIDEO</label>
+            </div>
+            <div class="lineas ml-2 mr-5" id="linea2"> </div>
+        </div>
+
+        <video width="1000" height="560" controls class="ml-5 mr-5 mb-4">
+            {% if recetas.videoo %}
+            <source src="{{ recetas.videoo.url }}" type="video/mp4">
+            {% endif %}
+        </video>
+    </div>
+</div>
+
+<div class="mt-5 mb-5">
+    <div class="mb-3" style="text-align: center; font-size: 50px; font-weight: bold; color: rgb(14, 14, 106);"> Otras Recetas </div>
+
+    <div>
+        <div id="ctnRe">
+            {% for rec in primera %}
+                <a href="{% url 'Admin_v/ver_receta' rec.id %}">    
+                    <img class="img1 ml-2" id="{{rec.id}}" src="{{rec.imagen.url}}" width="600px" height="400px">
+                </a>    
+                <label id="{{rec.id}}" class="names1" > {{rec.nombre }}</label>
+            {% endfor %}  
+        </div>   
+    </div>
+
+    <div class="mt-3"> 
+        <div id="ctnRee">
+            {% for rece in segunda %}
+                <a href="{% url 'Admin_v/ver_receta' rece.id %}">
+                    <img class="img2 ml-2" id="{{rece.id}}" src="{{rece.imagen.url}}" width="400px" height="280px">
+                </a>    
+                <label id="{{rece.id}}" class="names2"> {{rece.nombre}} </label>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}    
+</body>
+<script src="{% static 'js/ver_recetas.js' %}"></script>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>

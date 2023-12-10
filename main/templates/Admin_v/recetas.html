@@ -1,0 +1,339 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/recetas.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/recetas.js' %}"></script>
+    <title>Recetas</title>
+</head>
+<body>
+{% block content %}
+<header id="header">
+    <div id="hdPri"> 
+        <div id="btncont" class="mt-2 mr-2">
+            <button id="user_log" class="mr-5">
+                <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+            </button>
+
+            <button id="secciones" class="mr-5"> 
+               <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+
+            <button id="btncar" class="mr-3">
+                <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+            </button>
+
+            <button id="btnLog" class="mr-2">
+                <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+            </button>
+        </div>
+    </div> 
+
+    <div id="white">
+        <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+        <button id="home"> 
+            <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+        </button>
+    </div>
+
+    <div id="carrito_h">
+      <div id="ttl_carro" > 
+        <h4> Productos en el carro </h4>
+      </div>
+    {% if pro_carrito %}
+    <div id="scrollT">
+        <table class="ml-4 mt-2 mb-3">
+            <tbody>
+                {% for pro in pro_carrito %}
+                    <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                        <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                        <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                        <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                            {{ pro.producto.precio }}
+                        </td>
+                        <td style="width: 80px;"> 
+                            <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                            <span class="cantidad"> {{ pro.cantidad }} </span>
+                            <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>
+                        </td>
+                        <td>
+                        <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        </td>
+                    </tr>
+                {% endfor %}   
+            </tbody>
+        </table>
+    </div>
+        <div id="diseño_bajo"> 
+          <label id="subtotall" class="ml-4"> </label> <br>
+          <div style="text-align: center; " class="mt-2">
+            <a href="{% url 'Admin_v/carrito' %}">
+              <button class="btn"> Finalizar Compra </button>
+            </a>
+          </div>
+        </div>
+      {% else %}
+      <div id="dis_bajoE">
+        <br>
+        <label style="color: black;"> No hay productos Registrados </label>
+        <a href="{% url 'Admin_v/productos' %}">
+          <button class="btn"> Ver Productos </button>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+</header>
+
+  <div id="hdrctn">
+      <header id="header2">
+          <div id="lasSecci">
+              <div class="mt-2 ml-2">
+                  <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                  <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                  <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                  <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                  <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                  <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                  <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+              </div>
+          </div>
+      </header>
+  </div>
+
+
+    <div id="ctnImg"> 
+        <div>
+            <label class="ml-5" style="width: 600px;  transform: translateY(-5%); position: relative; color: rgb(11, 11, 124); font-size: 72px; font-family: cursive; font-weight: bold; top: 35%; left: 30px;">Recetas </label>
+        </div>
+    </div>
+
+    <!-- Contenedor del formulario y tabla -->
+    <div class="ml-5" style="display: flex;"> 
+        <div id="divForm" class="mt-5 mb-5">
+
+            <div id="divIE">
+                <div class="lineas" id="linea1"></div>
+                <div>
+                    <img src="{% static 'imagenes/recetas_ae/logo_r.png' %}" width="100px" height="100px" class="mt-3 mb-3" style="opacity: 0.6;" >
+                </div>
+                <div class="lineas" id="linea2"></div>
+            </div>
+
+            <div class="ml-5 mr-5">
+                <h4 style="color: rgb(5, 5, 113); font-weight: bold; text-align: center;" class="mt-1"> Añadir Receta </h4>
+                <form enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="tipo" id="tipo" value="">
+                    <label > Nombre </label> <br>
+                    {{form.nombre}} <br>
+                    {% if error %}
+                        <label style="color: red;"> {{error}} </label> <br>
+                    {% endif %}
+                    <label class="mt-2"> Metodo para ingresar</label> <br>
+                    <select name="slcTR" id="slcTR" >
+                        <option value="Video"> Video </option>
+                        <option value="Escrito"> Escrita </option>
+                    </select> 
+                    
+                    <!-- Si se selecciona Escrito -->
+                    <label style="display: none" id="lblI" class="mt-2"> Ingredientes </label> 
+                    <span id="frmIngre" style="display: none;"> {{form.ingre}} </span> 
+                    <label style="display: none;" id="lblP" class="mt-2"> Procedimiento </label> 
+                    <span id="frmProce" style="display: none;"> {{form.proce}} </span>
+                    {% if error3 %}
+                        <label style="color: red;"> {{error3}} </label> <br>
+                    {% endif %}
+
+                    <!-- Si selecciona Video -->
+                    <label id="lblV" class="mt-2"> Subir Video </label> 
+                    <span id="frmVideo"> {{form.video}} </span>
+                    {% if error2 %}
+                        <label style="color: red;"> {{error2}} </label> <br>
+                    {% endif %}
+
+                    <label class="mt-2"> Imagen </label> <br>
+                    {{form.imagen}} <br>
+                    <label class="mt-2"> Categoria </label> <br>
+                    <input type="radio" id="exist" name="categos" value="existente" checked>
+                    <label>Categoría existente</label>
+
+                    <input type="radio" id="nueva" name="categos" value="nueva" >
+                    <label>Categoría nueva</label><br>
+
+                    <div id="divexist">
+                        {{form.cat_si}}
+                    </div>
+                    
+                    <div id="divnueva" style="display: none;">
+                        <input type="text" name="categoria" id="categoria" placeholder="Categoría nueva..."><br>
+                    </div>
+                    <br>
+                    <button type="submit" id="btnA" class="btn mb-4"> Agregar </button>
+                </form>
+            </div>
+            <div id="divIE" class="mb-4">
+                <div class="lineas" id="linea1"></div>
+                <div>
+                    <img src="{% static 'imagenes/recetas_ae/logo_rf.png' %}" width="100px" height="100px" class="mt-3 mb-3" style="opacity: 0.6;" >
+                </div>
+                <div class="lineas" id="linea2"></div>
+            </div>
+
+        </div>
+
+        <div id="tblRr" class="mt-5">
+            <table class="table table-bordered" id="tabla">
+                <thead>
+                    <tr>
+                        <th style="color: rgb(5, 5, 113); font-size: 24px;" colspan="4"> Recetas Añadidas </th>
+                    </tr>
+                    <tr>
+                        <th> Nombre Receta </th>
+                        <th> Categoria </th>
+                        <th> Tipo </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+
+                <tbody>                        
+                    {% for recetas in bd_recetas %}
+                    <tr>
+                        <td> {{recetas.nombre}} </td>
+                        <td> {{recetas.categoria}}</td>
+                        <td> {{recetas.tipo}} </td>
+                        
+                        <td style="width: 250px;"> 
+                            <a href="{% url 'Admin_v/editar_recetas' recetas.id %}" class="btn btn-warning"> Editar </a>
+                            <a href="{% url 'eliminar_receta' recetas.id %}" class="btn btn-danger" onclick='return confirm("¿Seguro desea eliminar esta receta?")'> Eliminar </a> 
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+                <thead>
+                    <tr>
+                        <th colspan="4"> 
+                            <span class="step-links">
+                                {% if bd_recetas.has_previous %}
+                                    <a href="?page=1">&laquo; </a>
+                                    <a href="?page={{ bd_recetas.previous_page_number }}"></a>
+                                {% endif %}
+                        
+                                <span class="current">
+                                    Página {{ bd_recetas.number }} de {{ bd_recetas.paginator.num_pages }}.
+                                </span>
+                        
+                                {% if bd_recetas.has_next %}
+                                    <a href="?page={{ bd_recetas.next_page_number }}"></a>
+                                    <a href="?page={{ bd_recetas.paginator.num_pages }}">&raquo;</a>
+                                {% endif %}
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!-- Ver recetas -->
+    <div style="display: flex;">
+        <!-- Tabla -->
+        <div>
+            <table class="ml-5" id="tblR">
+                <thead>
+                    <tr>
+                        <th style="color: rgb(5, 5, 113); font-weight: bold; font-size: 40px;"> Recetas </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rcta in bd_recetas2 %}
+                        {% if forloop.counter0|divisibleby:2 %}  <!-- Comprueba si el índice actual es divisible por 2 -->
+                            <tr>
+                        {% endif %}
+                                <td> 
+                                    <div class="imgCtn">
+                                        <a href="{% url 'Admin_v/ver_receta' rcta.id%}">
+                                            <img src="{{ rcta.imagen.url }}" alt="">
+                                        </a>
+                                        <div class="nombre">
+                                            {{ rcta.nombre }}
+                                        </div>
+
+                                        <div class="catego">
+                                            {{ rcta.categoria }}
+                                        </div>
+                                    </div>
+                                </td>
+                        {% if forloop.counter|divisibleby:2 or forloop.last %} <!-- Comprueba si el índice es divisible por 2 o si es el último elemento -->
+                                    </tr>
+                        {% endif %}
+                    {% endfor %}
+                <thead id="thPAG">
+                    <tr>
+                        <th colspan="2" style="text-align: center; vertical-align: middle;">
+                            <div class="pagination">
+                                {% if bd_recetas2.has_previous %}
+                                    <a href="?page1=1">&laquo;</a>
+                                {% else %}
+                                    <span class="disabled">&laquo;</span>
+                                {% endif %}
+                                
+                                {% for num in bd_recetas2.paginator.page_range %}
+                                    {% if bd_recetas2.number == num %}
+                                        <span class="current">{{ num }}</span>
+                                    {% else %}
+                                        <a href="?page1={{ num }}">{{ num }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                {% if bd_recetas2.has_next %}
+                                    <a href="?page1={{ bd_recetas2.paginator.num_pages }}">&raquo;</a>
+                                {% else %}
+                                    <span class="disabled">&raquo;</span>
+                                {% endif %}
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Categorias y Buscador -->
+        <div>
+            <div id="ctnSb" class="mt-5">
+                <input type="text" name="search_R" id="search_R" placeholder="Buscar Recetas..."> <br>
+                <span id="search_icon"></span>
+            </div>
+
+            <div class="ml-2" id="result_fil"> </div>
+            
+            <div class="mt-5 ml-4" id="divcat">
+                
+                <div> 
+                    <h4 style="text-align: center; font-size: 30px; font-weight: bold;"> Categorias </h4>
+                </div>
+
+                <div class="ml-5 mt-4">
+                        <a style="font-size: 18px; cursor: pointer;" class="cat"  data-categoria="todos"> Todos </a> <br><br>
+                    {% for cat in unico_catego %}
+                        <a style="font-size: 18px; cursor: pointer;" class="cat"  data-categoria="{{cat.categoria}}">  {{cat.categoria}}  </a> <label style="color: black;" >({{cat.total}}) </label> 
+                        <br> <br>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br>
+{% endblock %}    
+</body>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>

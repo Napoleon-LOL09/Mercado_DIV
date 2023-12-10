@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/carrito.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Carrito de Compra</title>
+</head>
+<body>
+    {% block content %}
+    <input type="hidden" id="id_user" value="{{request.user.id}}">
+    <header id="header">
+        <div id="hdPri"> 
+            <div id="btncont" class="mt-2 mr-2">
+                <button id="user_log" class="mr-5">
+                    <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                    <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+                </button>
+  
+                <button id="secciones" class="mr-5"> 
+                   <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+  
+                <button id="btncar" class="mr-3">
+                    <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+                </button>
+  
+                <button id="btnLog" class="mr-2">
+                    <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+                </button>
+            </div>
+        </div> 
+  
+        <div id="white">
+            <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+            <button id="home"> 
+                <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+            </button>
+        </div>
+      </header>
+
+      <div id="hdrctn">
+          <header id="header2">
+              <div id="lasSecci">
+                  <div class="mt-2 ml-2">
+                      <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                      <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                      <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                      <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                      <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                      <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                      <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+                  </div>
+              </div>
+          </header>
+      </div>
+
+    <div id="ctnImg"> 
+        <div>
+            <label class="ml-5" style="width: 600px;  transform: translateY(-5%); position: relative; color: rgb(11, 11, 124); font-size: 72px; font-family: cursive; font-weight: bold; top: 25%; left: 30px;">Carro de Compras </label>
+        </div>
+    </div>
+    
+    <div style="display: flex;">
+        <div style="width: 60%;">
+        {% if pro_carrito %}
+            <table id="tblCC" class="ml-4 mt-4">
+                <thead>
+                    <tr>
+                        <th colspan="6"><h4 align="center" class="font-weight-bold" style="font-size: 30px; color: rgb(11, 11, 124); height: 60px;">Carrito de compras</h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th> Nombre </th>
+                        <th> Cantidad </th>
+                        <th> Precio (C/U) </th>
+                        <th> Precio Total </th>
+                        <th></th>  
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for pro in pro_carrito %}
+                        <tr class="producto" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                            <td> <img src="{{ pro.producto.img.url }}" width="100px" height="120px"> </td>
+                            <td> {{ pro.producto.name }} </td>
+                            <td> 
+                                <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                                <span class="cantidad"> {{ pro.cantidad }} </span>
+                                <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>
+                            </td>
+                            <td class="precio"> 
+                                {{ pro.producto.precio }}
+                            </td>
+                            <td> <label class="subtotal" style="color: black;"></label> 
+                            <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        </tr>
+                    {% endfor %}   
+                </tbody>
+            </table>
+        {% else %} 
+            <h2 class="mt-3" style="font-weight: bold; text-align: center; color:rgb(11, 11, 124);"> Carrito de Compras </h2>
+            <p class="text-center mt-5" style="font-size: 22px;"> No hay datos Registrados, Mire los <a href="{% url 'Admin_v/productos' %}">Productos que ofrecemos</a></p>
+        {% endif %}
+        </div>
+    <aside class="compra mr-3">
+        <div id="ctnTAPC" >
+            <div style="background-color: #265073; height: 460px; width: 350px; margin-left: 6%; border-radius: 30px;">  
+                <form id="veri_cup" method="post" class="mt-3 mb-4 ml-2">
+                    {% csrf_token %}
+                    <input id="inpD" name="inpD" type="text" placeholder="Cupon de Descuento..." style="text-align: center; width: 240px; border-radius: 30px;" class="mt-3"> 
+                    <button id="vrfD" type="submit" class="btn btn-success ml-1" style="border-radius: 20px; font-weight: bold; width: 80px;"> Añadir </button>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                </form> 
+    
+                <div id="fnlz" class="mb-3 mt-4"> 
+                    <label style="color: black">Datos de la Compra </label>
+                </div>
+    
+                <div class="ml-4 mb-4" id="divTot">
+                    <label id="subtotF" class="mt-1 mb-4 font-weight-bold"> </label> <br>
+                    <label id="cuponDes" class="mb-4 font-weight-bold">Descuento <label style="font-weight: 100; margin-left: 137px;">0.00$</label> </label> <br>
+                    <label id="itbm" class="mb-4 ml-3 font-weight-bold"> Itbms <label style="font-weight: 100; margin-left: 160px;">0.50$</label> </label> <br>
+                    <label id="total" class="mb-4" style="margin-left: 8%;"> </label> <br>
+                    <button class="btn btn-success btn-lg font-weight-bold" style="margin-left: 17%; border-radius: 30px;" id="btn_fnlz">Finalizar Compra</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    </div>
+{% endblock %}
+</body>
+<script src="{% static 'js/carrito.js' %}"></script>
+<script src="{% static 'js/header_ac.js' %}"></script>
+</html>

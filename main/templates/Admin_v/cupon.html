@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/cupon.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Cupones</title>
+</head>
+<body>
+{% block content %}
+<header id="header">
+    <div id="hdPri"> 
+        <div id="btncont" class="mt-2 mr-2">
+            <button id="user_log" class="mr-5">
+                <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+            </button>
+
+            <button id="secciones" class="mr-5"> 
+               <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+
+            <button id="btncar" class="mr-3">
+                <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+            </button>
+
+            <button id="btnLog" class="mr-2">
+                <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+            </button>
+        </div>
+    </div> 
+
+    <div id="white">
+        <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+        <button id="home"> 
+            <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+        </button>
+    </div>
+
+    <div id="carrito_h">
+      <div id="ttl_carro" > 
+        <h4> Productos en el carro </h4>
+      </div>
+      {% if pro_carrito %}
+      <div id="scrollT">
+        <table class="ml-4 mt-2 mb-3">
+            <tbody>
+                {% for pro in pro_carrito %}
+                    <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                        <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                        <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                        <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                            {{ pro.producto.precio }}
+                        </td>
+                        <td style="width: 80px;"> 
+                            <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                            <span class="cantidad"> {{ pro.cantidad }} </span>
+                            <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>
+                        </td>
+                        <td>
+                        <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        </td>
+                    </tr>
+                {% endfor %}   
+            </tbody>
+        </table>
+    </div>
+      </table>
+        <div id="diseño_bajo"> 
+          <label id="subtotall" class="ml-4"> </label> <br>
+          <div style="text-align: center; " class="mt-2">
+            <a href="{% url 'Admin_v/carrito' %}">
+              <button class="btn"> Finalizar Compra </button>
+            </a>
+          </div>
+        </div>
+      {% else %}
+      <div id="dis_bajoE">
+        <br>
+        <label style="color: black;"> No hay productos Registrados </label>
+        <a href="{% url 'Admin_v/productos' %}">
+          <button class="btn"> Ver Productos </button>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <div id="hdrctn">
+      <header id="header2">
+          <div id="lasSecci">
+              <div class="mt-2 ml-2">
+                  <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                  <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                  <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                  <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                  <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                  <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                  <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+              </div>
+          </div>
+      </header>
+  </div>
+
+<div id="ImgFon"> 
+    <div>
+        <label class="ml-5" style="width: 600px;  transform: translateY(-5%); position: relative; color: rgb(11, 11, 124); font-size: 72px; font-family: cursive; font-weight: bold; top: 35%; left: 30px;">Cupones </label>
+    </div>
+</div>
+
+<div style="display: flex; position: relative;">
+    <div id="ctnCP" class="ml-5 mt-5">
+        <div id="divIE">
+            <div class="lineas" id="linea1"></div>
+            <div>
+                <img src="{% static 'imagenes/cupon_a/cupon.png' %}" width="80px" height="80px" class="mt-3 ml-3 mb-3">
+            </div>
+            <div class="lineas" id="linea2"></div>
+        </div>
+
+        <div class="mt-2 mb-5">
+            <h4 class="font-weight-bold text-center" style="color: rgb(11, 11, 124); font-size: 29px;"> Crear Cupon </h4>
+        </div>
+
+        <div id="ctnPP" class="ml-5">
+            <form action="" method="post">
+                {% csrf_token %}
+                <label class="mb-3 ml-3 mr-4"> Codigo </label> &nbsp;
+                {{form.codigo}} <br>
+                <label class="mt-3 mb-3 mr-3"> Descuento </label>
+                {{form.descuento}} <br>
+                <label class="mt-2 mb-3" style="margin-left: 37%;"> Duración </label><br>
+                <label class="ml-2" style="margin-right: 28px;" >Desde </label> &nbsp; 
+                {{form.fecha_i}} <br>
+                <label class="ml-2" style="margin-right: 30px;"> Hasta </label> &nbsp;
+                {{form.fecha_f}} <br>
+                <label class="mt-3 mb-3 mr-3"> Limite de usos </label>
+                {{form.limite}}
+                <div id="divBtn" class="mb-4 mt-3">
+                    <button type="submit" class="btn btn-success" style="border-radius: 30px;"> Crear </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="divIE" class="mb-4">
+            <div class="lineas" id="linea1"></div>
+            <div>
+                <img src="{% static 'imagenes/cupon_a/cupon2.png' %}" width="85px" height="50px" class="mt-3 ml-3 mb-3">
+            </div>
+            <div class="lineas" id="linea2"></div>
+        </div>
+    </div>
+    
+    <div class="mt-5" id="divTb"> 
+        <table class="table table-bordered" id="tbl">
+            <thead>
+                <tr> 
+                    <th colspan="7" style="font-size: 30px; font-weight: bold; color: rgb(11, 11, 124); "> Cupones Resgistrados</th>
+                </tr>
+
+                <tr>
+                    <th rowspan="2" style="vertical-align: middle;"> Codigo </th>
+                    <th rowspan="2" style="vertical-align: middle;"> Descuento </th>
+                    <th colspan="2"> Duracion </th>
+                    <th rowspan="2" style="vertical-align: middle;"> Limite Usos </th>
+                    <th rowspan="2" style="vertical-align: middle;"> Usado </th>
+                    <th rowspan="2"> </th>
+                </tr>
+                
+                <tr>
+                    <th> Inicia </th>
+                    <th >Vence </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cup in bd_cupon %}
+                <tr>
+                    <td style="vertical-align: middle;" contenteditable="true" class="edit" data-column="codigo" data-id="{{ cup.id }}"> {{cup.codigo}} </td>
+                    <td style="vertical-align: middle;" contenteditable="true" class="edit" data-column="descuento" data-id="{{ cup.id }}" >{{cup.descuento}}% </td>
+                    <td style="vertical-align: middle;" contenteditable="true" class="edit" data-column="fecha_i" data-id="{{ cup.id }}"> {{cup.fecha_i}} </td>
+                    <td style="vertical-align: middle;" contenteditable="true" class="edit" data-column="fecha_f" data-id="{{ cup.id }}"> {{cup.fecha_f}} </td>
+                    <td style="vertical-align: middle;" contenteditable="true" class="edit" data-column="limite" data-id="{{ cup.id }}"> {{cup.limite}}</td>
+                    <td style="vertical-align: middle;"> {{cup.usado}} </td> 
+                    <td> <a href="{% url 'eliminar_cupon' cup.id %}" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el cupon?')">Eliminar</a> </td>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+{% endblock %}
+</body>
+<script src="{% static 'js/cupon.js' %}"></script>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>

@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_v/user.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Lista de usuarios en el sistema</title>
+</head>
+<body>
+{% block content %}
+<header id="header">
+    <div id="hdPri"> 
+        <div id="btncont" class="mt-2 mr-2">
+            <button id="user_log" class="mr-5">
+                <img src="{% static 'imagenes/menu_ae/user.png' %}" width="35px" height="40px">
+                <label style="margin: 0;"> Usuario: <label style="font-weight:500;">{{request.user.username}}</label> </label>   
+            </button>
+
+            <button id="secciones" class="mr-5"> 
+               <img src="{% static 'imagenes/menu_ae/sec.png' %}" width="40px" height="40px"> Secciones <label style="font-size: 17px">v</label> </button>
+
+            <button id="btncar" class="mr-3">
+                <img src="{% static 'imagenes/menu_ae/carro.png' %}" width="40px" height="35px" class="mb-2 mt-1"> <label class="ml-1">Carrito</label>
+            </button>
+
+            <button id="btnLog" class="mr-2">
+                <img src="{% static 'imagenes/menu_ae/logoutt.png' %}" width="35px" height="35px">  
+            </button>
+        </div>
+    </div> 
+
+    <div id="white">
+        <img src="{% static 'imagenes/menu_ae/logo.png' %}" width="250px" height="60px" class="ml-4 mb-3">
+        <button id="home"> 
+            <img src="{% static 'imagenes/menu_ae/principal.png' %}" width="50px" height="50px">
+        </button>
+    </div>
+
+    <div id="carrito_h">
+      <div id="ttl_carro" > 
+        <h4> Productos en el carro </h4>
+      </div>
+      {% if pro_carrito %}
+      <div id="scrollT">
+        <table class="ml-4 mt-2 mb-3">
+            <tbody>
+                {% for pro in pro_carrito %}
+                    <tr class="producto" data-proo="{{ pro.producto.id }}" data-id="{{ pro.id }}" data-precio="{{ pro.producto.precio }}" data-cantidad="{{ pro.cantidad }}">
+                        <td style="width: 80px;"> <img src="{{ pro.producto.img.url }}" width="60px" height="60px"> </td>
+                        <td style="color: grey; width: 100px;"> {{ pro.producto.name }} </td> 
+                        <td class="precio" style="color: rgb(12, 12, 129); width: 80px;"> 
+                            {{ pro.producto.precio }}
+                        </td>
+                        <td style="width: 80px;"> 
+                            <a href="#" class="increment" data-action="increment" style="font-size: 30px;"> + </a>
+                            <span class="cantidad"> {{ pro.cantidad }} </span>
+                            <a href="#" class="decrement" data-action="decrement" style="font-size: 30px;" > - </a>
+                        </td>
+                        <td>
+                        <a href="#" class="remover ml-4" data-action="remove" style="font-size: 30px;"> x </a> </td>
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        </td>
+                    </tr>
+                {% endfor %}   
+            </tbody>
+        </table>
+      </div>
+        <div id="diseño_bajo"> 
+          <label id="subtotall" class="ml-4"> </label> <br>
+          <div style="text-align: center; " class="mt-2">
+            <a href="{% url 'Admin_v/carrito' %}">
+              <button class="btn"> Finalizar Compra </button>
+            </a>
+          </div>
+        </div>
+      {% else %}
+      <div id="dis_bajoE">
+        <br>
+        <label style="color: black;"> No hay productos Registrados </label>
+        <a href="{% url 'Admin_v/productos' %}">
+          <button class="btn"> Ver Productos </button>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <div id="hdrctn">
+      <header id="header2">
+          <div id="lasSecci">
+              <div class="mt-2 ml-2">
+                  <label> <a href="{% url 'Admin_v/usuarios' %}"> Usuarios </a> - </label>
+                  <label> <a href="{% url 'Admin_v/categorias' %}"> Categorias </a> - </label>
+                  <label> <a href="{% url 'Admin_v/productos' %}"> Productos </a> - </label>
+                  <label> <a href="{% url 'Admin_v/recetas' %}"> Recetas</a> - </label>
+                  <label> <a href="{% url 'Admin_v/bitacora' %}"> Bitacora de Desarrollo</a> - </label>
+                  <label> <a href="{% url 'Admin_v/cupon' %}"> Cupones </a> - </label>
+                  <a href="{% url 'Admin_v/carrito' %}"> Carrito</a>
+              </div>
+          </div>
+      </header>
+  </div>
+
+    <div id="ImgFon"> 
+        <div>
+            <label class="ml-5" style="width: 600px;  transform: translateY(-5%); position: relative; color: rgb(11, 11, 124); font-size: 72px; font-family: cursive; font-weight: bold; top: 35%; left: 10px;">Usuarios </label>
+        </div>
+    </div>
+
+
+    <h4 align="center" class="mt-4 mb-4 font-weight-bold font-italic" style="color: rgb(5, 5, 113); font-size: 30px;"> Lista de Usuarios registrados </h4>
+
+    <table class="table table-bordered" id="tabla" align="center">
+        <thead>
+            <tr>
+                <th> Usuarios </th>
+                <th> Email </th>
+                <th> Contraseña </th>
+                <th> Es Staff </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in usuarios %}
+            <tr>
+                <td> {{ user.username }} </td>
+                <td> {{ user.email }} </td>
+                <td>
+                    <p class="pvrtd">
+                        {{ user.password|truncatechars:25 }}
+                        <a href="#" class="vrtd" data-password="{{ user.password }}">Ver Todo</a>
+                    </p>
+                    <p style="display: none;" class="MtrAll"> {{ user.password }} </p>
+                </td>
+                <td>
+                    {% if user.is_staff == 1 %}
+                        <p> Si </p>
+                    {% else %}
+                        <p> No </p>
+                    {% endif %}
+                </td>
+                <td style="width: 270px;" >
+                    <form method="post" action="{% url 'Admin_v/usuarios' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        {% if user.username == "Admin" %}
+
+                        {% else %}
+                            {% if user.username != request.user.username %}
+                                {% if user.is_staff == 1 %}
+                                    <button type="submit" class="btn" id="btnE">Volver Estandar</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-success">Volver Admin</button>
+                                {% endif %}
+                            {% endif %}    
+                        {% endif %}
+
+                        {% if user.username != "Admin" %}
+                            {% if user.username != request.user.username %}
+                                <a href="{% url 'eliminar_registro' user.id %}" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el usuario?')">Eliminar</a>
+                            {% endif %}
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+</body>
+<script src="{% static 'js/menu.js' %}"></script>
+<script src="{% static 'js/header_a.js' %}"></script>
+</html>
